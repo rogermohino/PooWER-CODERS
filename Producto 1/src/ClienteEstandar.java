@@ -1,8 +1,18 @@
+/**
+ * Representa un cliente estándar que hereda de la clase Cliente.
+ */
 public class ClienteEstandar extends Cliente {
     //Atributos
 
 
-    //Constructores
+    /**
+     * Constructor de la clase ClienteEstandar.
+     * 
+     * @param nombre Nombre del cliente.
+     * @param domicilio Domicilio del cliente.
+     * @param nif Número de Identificación Fiscal del cliente.
+     * @param email Correo electrónico del cliente.
+     */
     public ClienteEstandar(String nombre, String domicilio, String nif, String email) {
         super(nombre, domicilio, nif, email);
     }
@@ -11,7 +21,11 @@ public class ClienteEstandar extends Cliente {
     //Getters y Setters
 
 
-    //toString
+    /**
+     * Devuelve una representación en cadena del cliente estándar.
+     * 
+     * @return Representación en cadena del cliente estándar.
+     */
     @Override
     public String toString() {
         return "ClienteEstandar{" +
