@@ -1,3 +1,5 @@
+package POOwerCoders.modelo;
+
 /**
  * Representa un artículo con un código, descripción, precio de venta,
  * gastos de envío y tiempo de preparación.
@@ -12,7 +14,7 @@ public class Articulo {
 
 
     /**
-     * Constructor de la clase Articulo.
+     * Constructor de la clase POOwerCoders.modelo.Articulo.
      * 
      * @param codigo Código único del artículo.
      * @param descripcion Descripción del artículo.
@@ -118,7 +120,7 @@ public class Articulo {
      */
     @Override
     public String toString() {
-        return "Articulo{" +
+        return "POOwerCoders.modelo.Articulo{" +
                 "codigo='" + codigo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", precioVenta=" + precioVenta +
