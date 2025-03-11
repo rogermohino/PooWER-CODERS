@@ -1,7 +1,9 @@
+package POOwerCoders.modelo;
+
 import java.time.LocalDateTime;
 /**
  * Representa un pedido realizado por un cliente en la tienda en línea.
- * Implementa la interfaz IPedido.
+ * Implementa la interfaz POOwerCoders.modelo.IPedido.
  */
 public class Pedido implements IPedido {
     //Atributos
@@ -13,10 +15,10 @@ public class Pedido implements IPedido {
 
 
     /**
-     * Constructor de la clase Pedido.
+     * Constructor de la clase POOwerCoders.modelo.Pedido.
      * 
      * @param numeroPedido Número de identificación del pedido.
-     * @param cliente Cliente que realiza el pedido.
+     * @param cliente POOwerCoders.modelo.Cliente que realiza el pedido.
      * @param articulo Artículo solicitado.
      * @param cantidad Cantidad del artículo solicitado.
      * @param fechaHora Fecha y hora del pedido.
@@ -49,7 +51,7 @@ public class Pedido implements IPedido {
     /**
      * Obtiene el cliente que realizó el pedido.
      * 
-     * @return Cliente del pedido.
+     * @return POOwerCoders.modelo.Cliente del pedido.
      */
     public Cliente getCliente() {
         return cliente;
@@ -144,7 +146,7 @@ public class Pedido implements IPedido {
      */
     @Override
     public String toString() {
-        return "Pedido{" +
+        return "POOwerCoders.modelo.Pedido{" +
                 "numeroPedido=" + numeroPedido +
                 ", cliente=" + cliente +
                 ", articulo=" + articulo +

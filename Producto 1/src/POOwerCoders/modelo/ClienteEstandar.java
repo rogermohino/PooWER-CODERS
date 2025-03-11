@@ -1,12 +1,14 @@
+package POOwerCoders.modelo;
+
 /**
- * Representa un cliente estándar que hereda de la clase Cliente.
+ * Representa un cliente estándar que hereda de la clase POOwerCoders.modelo.Cliente.
  */
 public class ClienteEstandar extends Cliente {
     //Atributos
 
 
     /**
-     * Constructor de la clase ClienteEstandar.
+     * Constructor de la clase POOwerCoders.modelo.ClienteEstandar.
      * 
      * @param nombre Nombre del cliente.
      * @param domicilio Domicilio del cliente.
@@ -28,7 +30,7 @@ public class ClienteEstandar extends Cliente {
      */
     @Override
     public String toString() {
-        return "ClienteEstandar{" +
+        return "POOwerCoders.modelo.ClienteEstandar{" +
                 "nombre='" + nombre + '\'' +
                 ", domicilio='" + domicilio + '\'' +
                 ", nif='" + nif + '\'' +

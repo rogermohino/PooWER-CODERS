@@ -1,3 +1,5 @@
+package POOwerCoders.modelo;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -40,13 +42,13 @@ public class OnlineStore {
     /**
      * Añade un cliente a la tienda.
      * 
-     * @param c Cliente a añadir.
+     * @param c POOwerCoders.modelo.Cliente a añadir.
      */
     public void añadirCliente(Cliente c) { clientes.add(c); }
     /**
      * Añade un pedido a la tienda.
      * 
-     * @param p Pedido a añadir.
+     * @param p POOwerCoders.modelo.Pedido a añadir.
      */
     public void añadirPedido(Pedido p) { pedidos.add(p); }
 }

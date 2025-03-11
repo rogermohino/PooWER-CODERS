@@ -1,3 +1,5 @@
+package POOwerCoders.modelo;
+
 public interface IPedido {
     //Atributos (sin implementar, ya que es una interfaz)
 

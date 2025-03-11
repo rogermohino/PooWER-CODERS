@@ -1,3 +1,5 @@
+package POOwerCoders.modelo;
+
 /**
  * Representa un cliente abstracto con atributos básicos como nombre, domicilio,
  * NIF y correo electrónico.
@@ -10,7 +12,7 @@ public abstract class Cliente {
     protected String email;
 
     /**
-     * Constructor de la clase Cliente.
+     * Constructor de la clase POOwerCoders.modelo.Cliente.
      * 
      * @param nombre Nombre del cliente.
      * @param domicilio Domicilio del cliente.
@@ -96,7 +98,7 @@ public abstract class Cliente {
      */
     @Override
     public String toString() {
-        return String.format("Cliente {nombre='%s', domicilio='%s', nif='%s', email='%s'}", nombre, domicilio, nif, email);
+        return String.format("POOwerCoders.modelo.Cliente {nombre='%s', domicilio='%s', nif='%s', email='%s'}", nombre, domicilio, nif, email);
     }
 }
 

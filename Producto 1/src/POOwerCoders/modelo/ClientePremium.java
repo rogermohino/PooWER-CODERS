@@ -1,5 +1,7 @@
+package POOwerCoders.modelo;
+
 /**
- * Representa un cliente premium que hereda de la clase Cliente.
+ * Representa un cliente premium que hereda de la clase POOwerCoders.modelo.Cliente.
  * Los clientes premium tienen una cuota anual fija y un descuento en el envío.
  */
 public class ClientePremium extends Cliente {
@@ -8,7 +10,7 @@ public class ClientePremium extends Cliente {
     private static final double DESCUENTO_ENVIO = 0.2;
 
     /**
-     * Constructor de la clase ClientePremium.
+     * Constructor de la clase POOwerCoders.modelo.ClientePremium.
      * 
      * @param nombre Nombre del cliente.
      * @param domicilio Domicilio del cliente.
@@ -42,7 +44,7 @@ public class ClientePremium extends Cliente {
      */
     @Override
     public String toString() {
-        return "ClientePremium{" +
+        return "POOwerCoders.modelo.ClientePremium{" +
                 "nombre='" + nombre + '\'' +
                 ", domicilio='" + domicilio + '\'' +
                 ", nif='" + nif + '\'' +
