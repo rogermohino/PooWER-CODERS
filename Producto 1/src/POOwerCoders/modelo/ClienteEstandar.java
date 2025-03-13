@@ -30,11 +30,11 @@ public class ClienteEstandar extends Cliente {
      */
     @Override
     public String toString() {
-        return "POOwerCoders.modelo.ClienteEstandar{" +
-                "nombre='" + nombre + '\'' +
-                ", domicilio='" + domicilio + '\'' +
-                ", nif='" + nif + '\'' +
-                ", email='" + email + '\'' +
+        return "Cliente Estándar { " +
+                "Nombre:'" + nombre + '\'' +
+                ", Domicilio:'" + domicilio + '\'' +
+                ", NIF:'" + nif + '\'' +
+                ", Email:'" + email + '\'' +
                 '}';
     }
 }

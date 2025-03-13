@@ -146,12 +146,11 @@ public class Pedido implements IPedido {
      */
     @Override
     public String toString() {
-        return "POOwerCoders.modelo.Pedido{" +
-                "numeroPedido=" + numeroPedido +
-                ", cliente=" + cliente +
-                ", articulo=" + articulo +
-                ", cantidad=" + cantidad +
-                ", fechaHora=" + fechaHora +
+        return "NuúmeroPedido:" + numeroPedido +
+                " {Cliente:" + cliente +
+                ", Artículo:" + articulo +
+                ", Cantidad: " + cantidad +
+                ", FechaHora:" + fechaHora +
                 '}';
     }
 

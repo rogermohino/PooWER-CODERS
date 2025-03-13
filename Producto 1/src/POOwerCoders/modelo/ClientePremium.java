@@ -44,11 +44,11 @@ public class ClientePremium extends Cliente {
      */
     @Override
     public String toString() {
-        return "POOwerCoders.modelo.ClientePremium{" +
-                "nombre='" + nombre + '\'' +
-                ", domicilio='" + domicilio + '\'' +
-                ", nif='" + nif + '\'' +
-                ", email='" + email + '\'' +
+        return "Cliente Premium {" +
+                "Nombre:'" + nombre + '\'' +
+                ", Domicilio:'" + domicilio + '\'' +
+                ", NIF'" + nif + '\'' +
+                ", Email:'" + email + '\'' +
                 '}';
     }
 }
