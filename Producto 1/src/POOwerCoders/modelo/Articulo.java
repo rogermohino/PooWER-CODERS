@@ -120,12 +120,11 @@ public class Articulo {
      */
     @Override
     public String toString() {
-        return "POOwerCoders.modelo.Articulo{" +
-                "codigo='" + codigo + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", precioVenta=" + precioVenta +
-                ", gastosEnvio=" + gastosEnvio +
-                ", tiempoPreparacion=" + tiempoPreparacion +
+        return "Artículo Código:'" + codigo + '\'' +
+                " {Descripción:'" + descripcion + '\'' +
+                ", PrecioVenta:" + precioVenta +
+                ", GastosEnvio:" + gastosEnvio +
+                ", TiempoPreparacion:" + tiempoPreparacion +
                 '}';
     }
 }

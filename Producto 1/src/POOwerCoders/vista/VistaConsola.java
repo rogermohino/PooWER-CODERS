@@ -111,55 +111,66 @@ public class VistaConsola {
     }
 
     private void agregarPedido() {
-        System.out.print("Ingrese el NIF del cliente: ");
-        String nif = scanner.nextLine();
-        Cliente cliente = null;
+        String respuesta;
 
-        // Buscar cliente por NIF
-        for (Cliente c : controlador.obtenerClientes()) {
-            if (c.getNif().equals(nif)) {
-                cliente = c;
-                break;
+        do {
+            System.out.print("Ingrese el NIF del cliente: ");
+            String nif = scanner.nextLine();
+            Cliente cliente = null;
+
+            // Buscar cliente por NIF
+            for (Cliente c : controlador.obtenerClientes()) {
+                if (c.getNif().equals(nif)) {
+                    cliente = c;
+                    break;
+                }
             }
-        }
 
-        if (cliente == null) {
-            System.out.println("Error: Cliente no encontrado.");
-            return;
-        }
-
-        System.out.print("Ingrese el código del artículo: ");
-        String codigoArticulo = scanner.nextLine();
-        Articulo articulo = null;
-
-        // Buscar artículo por código
-        for (Articulo a : controlador.obtenerArticulos()) {
-            if (a.getCodigo().equals(codigoArticulo)) {
-                articulo = a;
-                break;
+            if (cliente == null) {
+                System.out.println("Error: Cliente no encontrado.");
+                return; // Puedes poner continue si quieres seguir preguntando después de error
             }
-        }
 
-        if (articulo == null) {
-            System.out.println("Error: Artículo no encontrado.");
-            return;
-        }
+            System.out.print("Ingrese el código del artículo: ");
+            String codigoArticulo = scanner.nextLine();
+            Articulo articulo = null;
 
-        System.out.print("Ingrese la cantidad: ");
-        int cantidad = scanner.nextInt();
-        scanner.nextLine();
+            // Buscar artículo por código
+            for (Articulo a : controlador.obtenerArticulos()) {
+                if (a.getCodigo().equals(codigoArticulo)) {
+                    articulo = a;
+                    break;
+                }
+            }
 
-        Pedido pedido = new Pedido(
-                controlador.obtenerPedidos().size() + 1,
-                cliente,
-                articulo,
-                cantidad,
-                java.time.LocalDateTime.now()
-        );
+            if (articulo == null) {
+                System.out.println("Error: Artículo no encontrado.");
+                return; // O continue si quieres seguir preguntando después de error
+            }
 
-        controlador.agregarPedido(pedido);
-        System.out.println("Pedido agregado correctamente.");
+            System.out.print("Ingrese la cantidad: ");
+            int cantidad = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer después de nextInt()
+
+            Pedido pedido = new Pedido(
+                    controlador.obtenerPedidos().size() + 1,
+                    cliente,
+                    articulo,
+                    cantidad,
+                    java.time.LocalDateTime.now()
+            );
+
+            controlador.agregarPedido(pedido);
+            System.out.println("Pedido agregado correctamente.");
+
+            System.out.print("¿Desea agregar otro artículo/pedido? (s/n): ");
+            respuesta = scanner.nextLine();
+
+        } while (respuesta.equalsIgnoreCase("s"));
+
+        System.out.println("Regresando al menú principal...");
     }
+
 
     private void mostrarClientes() {
         System.out.println("\n--- LISTA DE CLIENTES ---");
