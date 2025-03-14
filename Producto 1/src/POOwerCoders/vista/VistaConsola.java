@@ -1,7 +1,9 @@
 package POOwerCoders.vista;
 
 import POOwerCoders.controlador.Controlador;
+import POOwerCoders.excepciones.DatosInvalidosException;
 import POOwerCoders.modelo.*;
+
 
 import java.util.List;
 import java.util.Scanner;
@@ -53,6 +55,7 @@ public class VistaConsola {
         } while (opcion != 0);
     }
 
+    //Contiene manejo de excepciones personalizadas
     private void agregarCliente() {
         System.out.print("Ingrese nombre del cliente: ");
         String nombre = scanner.nextLine();
@@ -87,9 +90,14 @@ public class VistaConsola {
             cliente = new ClientePremium(nombre, domicilio, nif, email);
         }
 
-        controlador.agregarCliente(cliente);
-        System.out.println("Cliente agregado correctamente.");
+        try {
+            controlador.agregarCliente(cliente);
+            System.out.println("Cliente agregado correctamente.");
+        } catch (DatosInvalidosException e) {
+            System.out.println(e.getMessage());  // Muestra el mensaje de error si hay datos inválidos
+        }
     }
+
 
 
     private void agregarArticulo() {
@@ -110,48 +118,67 @@ public class VistaConsola {
         System.out.println("Artículo agregado correctamente.");
     }
 
+    //Contiene manejo de excepciones personalizadas
     private void agregarPedido() {
-        String respuesta;
+        System.out.print("Ingrese el NIF del cliente: ");
+        String nif = scanner.nextLine();
+        Cliente cliente = null;
 
-        do {
-            System.out.print("Ingrese el NIF del cliente: ");
-            String nif = scanner.nextLine();
-            Cliente cliente = null;
+        // Buscar cliente por NIF
+        for (Cliente c : controlador.obtenerClientes()) {
+            if (c.getNif().equals(nif)) {
+                cliente = c;
+                break;
+            }
+        }
 
-            // Buscar cliente por NIF
-            for (Cliente c : controlador.obtenerClientes()) {
-                if (c.getNif().equals(nif)) {
-                    cliente = c;
+        // Si el cliente no existe, se pide que se registre uno nuevo
+        if (cliente == null) {
+            System.out.println("El cliente no existe. Se registrará un nuevo cliente.");
+            cliente = registrarNuevoCliente(nif);
+
+            try {
+                controlador.agregarCliente(cliente);
+            } catch (DatosInvalidosException e) {
+                System.out.println(e.getMessage()); // Captura el error si los datos del cliente son inválidos
+                return; // Sale del método para evitar continuar con un cliente inválido
+            }
+        }
+
+        System.out.print("Ingrese el código del artículo: ");
+        String codigoArticulo = scanner.nextLine();
+        Articulo articulo = null;
+
+        // Buscar artículo por código
+        for (Articulo a : controlador.obtenerArticulos()) {
+            if (a.getCodigo().equals(codigoArticulo)) {
+                articulo = a;
+                break;
+            }
+        }
+
+        if (articulo == null) {
+            System.out.println("Error: El artículo no existe.");
+            return;
+        }
+
+        int cantidad;
+        while (true) {
+            try {
+                System.out.print("Ingrese la cantidad de unidades: ");
+                cantidad = Integer.parseInt(scanner.nextLine());
+                if (cantidad <= 0) {
+                    System.out.println("Error: La cantidad debe ser mayor a 0.");
+                } else {
                     break;
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Debe ingresar un número válido.");
             }
+        }
 
-            if (cliente == null) {
-                System.out.println("Error: Cliente no encontrado.");
-                return; // Puedes poner continue si quieres seguir preguntando después de error
-            }
-
-            System.out.print("Ingrese el código del artículo: ");
-            String codigoArticulo = scanner.nextLine();
-            Articulo articulo = null;
-
-            // Buscar artículo por código
-            for (Articulo a : controlador.obtenerArticulos()) {
-                if (a.getCodigo().equals(codigoArticulo)) {
-                    articulo = a;
-                    break;
-                }
-            }
-
-            if (articulo == null) {
-                System.out.println("Error: Artículo no encontrado.");
-                return; // O continue si quieres seguir preguntando después de error
-            }
-
-            System.out.print("Ingrese la cantidad: ");
-            int cantidad = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer después de nextInt()
-
+        // Crear el pedido y capturar la excepción en caso de datos inválidos
+        try {
             Pedido pedido = new Pedido(
                     controlador.obtenerPedidos().size() + 1,
                     cliente,
@@ -163,13 +190,45 @@ public class VistaConsola {
             controlador.agregarPedido(pedido);
             System.out.println("Pedido agregado correctamente.");
 
-            System.out.print("¿Desea agregar otro artículo/pedido? (s/n): ");
-            respuesta = scanner.nextLine();
-
-        } while (respuesta.equalsIgnoreCase("s"));
-
-        System.out.println("Regresando al menú principal...");
+        } catch (DatosInvalidosException e) {
+            System.out.println(e.getMessage()); // Captura el error si los datos del pedido son inválidos
+        }
     }
+
+
+
+
+    // Método para agregar un nuevo cliente directamnte desde agregar pedido.
+    private Cliente registrarNuevoCliente(String nif) {
+        System.out.print("Ingrese nombre del cliente: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Ingrese domicilio: ");
+        String domicilio = scanner.nextLine();
+        System.out.print("Ingrese email: ");
+        String email = scanner.nextLine();
+
+        int tipoCliente = 0;
+        while (tipoCliente != 1 && tipoCliente != 2) {
+            System.out.println("Seleccione el tipo de cliente:");
+            System.out.println("1. Cliente Estándar");
+            System.out.println("2. Cliente Premium");
+            System.out.print("Opción: ");
+
+            try {
+                tipoCliente = Integer.parseInt(scanner.nextLine());
+                if (tipoCliente != 1 && tipoCliente != 2) {
+                    System.out.println("Error: Seleccione una opción válida.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Debe ingresar un número válido.");
+            }
+        }
+
+        return (tipoCliente == 1)
+                ? new ClienteEstandar(nombre, domicilio, nif, email)
+                : new ClientePremium(nombre, domicilio, nif, email);
+    }
+
 
 
     private void mostrarClientes() {
