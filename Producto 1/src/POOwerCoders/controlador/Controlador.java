@@ -1,6 +1,7 @@
 package POOwerCoders.controlador;
 
 import POOwerCoders.modelo.*;
+import POOwerCoders.excepciones.DatosInvalidosException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,12 @@ public class Controlador {
         this.tienda = tienda;
     }
 
-    public void agregarCliente(Cliente cliente) {
+    //Contiene el manejo de excepciones personalizadas
+    public void agregarCliente(Cliente cliente) throws DatosInvalidosException {
+        if (cliente.getNombre().isEmpty() || cliente.getNif().isEmpty() || cliente.getEmail().isEmpty()) {
+            throw new DatosInvalidosException("Error: El nombre, NIF y email del cliente no pueden estar vacíos.");
+        }
+
         tienda.añadirCliente(cliente);
     }
 
@@ -20,9 +26,24 @@ public class Controlador {
         tienda.añadirArticulo(articulo);
     }
 
-    public void agregarPedido(Pedido pedido) {
+
+    //Contiene el manejo de excepciones personalizadas
+    public void agregarPedido(Pedido pedido) throws DatosInvalidosException {
+        if (pedido.getCliente() == null) {
+            throw new DatosInvalidosException("Error: El pedido debe tener un cliente válido.");
+        }
+
+        if (pedido.getArticulo() == null) {
+            throw new DatosInvalidosException("Error: El pedido debe incluir un artículo válido.");
+        }
+
+        if (pedido.getCantidad() <= 0) {
+            throw new DatosInvalidosException("Error: La cantidad del pedido debe ser mayor a 0.");
+        }
+
         tienda.añadirPedido(pedido);
     }
+
 
     public List<Cliente> obtenerClientes() {
         return tienda.getClientes();

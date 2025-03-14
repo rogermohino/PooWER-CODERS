@@ -146,12 +146,14 @@ public class Pedido implements IPedido {
      */
     @Override
     public String toString() {
-        return "NuúmeroPedido:" + numeroPedido +
-                " {Cliente:" + cliente +
-                ", Artículo:" + articulo +
+        return "Número de Pedido: " + numeroPedido +
+                " {Cliente: " + cliente +
+                ", Artículo: " + articulo +
                 ", Cantidad: " + cantidad +
-                ", FechaHora:" + fechaHora +
+                ", FechaHora: " + fechaHora +
+                ", Precio Total: " + calcularPrecio() + "€" +
                 '}';
     }
+
 
 }
