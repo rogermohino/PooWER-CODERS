@@ -77,7 +77,13 @@ public class Controlador {
         return clientesPremium;
     }
 
-    public boolean eliminarPedido(int numeroPedido) {
+
+
+
+
+
+
+    public void eliminarPedido(int numeroPedido) throws DatosInvalidosException {
         Pedido pedidoAEliminar = null;
 
         // Buscar el pedido por número
@@ -89,8 +95,7 @@ public class Controlador {
         }
 
         if (pedidoAEliminar == null) {
-            System.out.println("Error: No se encontró un pedido con ese número.");
-            return false;
+            throw new DatosInvalidosException("Error: No se encontró un pedido con ese número.");
         }
 
         // Verificar si el tiempo de preparación ha pasado
@@ -99,16 +104,21 @@ public class Controlador {
         ).toMinutes();
 
         if (minutosTranscurridos > pedidoAEliminar.getArticulo().getTiempoPreparacion()) {
-            System.out.println("Error: No se puede eliminar el pedido porque ya ha sido enviado.");
-            return false;
+            throw new DatosInvalidosException("Error: No se puede eliminar el pedido porque ya ha sido enviado.");
         }
 
         tienda.getPedidos().remove(pedidoAEliminar);
         System.out.println("Pedido eliminado correctamente.");
-        return true;
     }
 
-    public List<Pedido> obtenerPedidosPendientes(String nifCliente) {
+
+
+
+
+
+
+
+    public List<Pedido> obtenerPedidosPendientes(String nifCliente) throws DatosInvalidosException {
         List<Pedido> pedidosPendientes = new ArrayList<>();
         for (Pedido p : tienda.getPedidos()) {
             long minutosTranscurridos = java.time.Duration.between(
@@ -121,10 +131,22 @@ public class Controlador {
                 }
             }
         }
+
+        if (pedidosPendientes.isEmpty()) {
+            throw new DatosInvalidosException("No hay pedidos pendientes.");
+        }
+
         return pedidosPendientes;
     }
 
-    public List<Pedido> obtenerPedidosEnviados(String nifCliente) {
+
+
+
+
+
+
+
+    public List<Pedido> obtenerPedidosEnviados(String nifCliente) throws DatosInvalidosException {
         List<Pedido> pedidosEnviados = new ArrayList<>();
         for (Pedido p : tienda.getPedidos()) {
             long minutosTranscurridos = java.time.Duration.between(
@@ -137,8 +159,14 @@ public class Controlador {
                 }
             }
         }
+
+        if (pedidosEnviados.isEmpty()) {
+            throw new DatosInvalidosException("No hay pedidos enviados.");
+        }
+
         return pedidosEnviados;
     }
+
 
 
 }
