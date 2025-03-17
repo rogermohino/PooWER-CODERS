@@ -308,6 +308,7 @@ public class VistaConsola {
 
 
 
+
     private void mostrarPedidosEnviados() {
         System.out.print("Ingrese el NIF del cliente (o presione Enter para mostrar todos): ");
         String nif = scanner.nextLine().trim();
