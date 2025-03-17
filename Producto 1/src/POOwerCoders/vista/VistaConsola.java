@@ -269,20 +269,23 @@ public class VistaConsola {
 
     private void eliminarPedido() {
         System.out.print("Ingrese el número del pedido a eliminar: ");
-
         int numeroPedido;
+
         try {
             numeroPedido = Integer.parseInt(scanner.nextLine());
+
+            try {
+                controlador.eliminarPedido(numeroPedido);
+                System.out.println("Pedido eliminado correctamente.");
+            } catch (DatosInvalidosException e) {
+                System.out.println(e.getMessage()); // Captura el error si el pedido no se puede eliminar
+            }
+
         } catch (NumberFormatException e) {
             System.out.println("Error: Debe ingresar un número válido.");
-            return;
-        }
-
-        boolean eliminado = controlador.eliminarPedido(numeroPedido);
-        if (!eliminado) {
-            System.out.println("No se pudo eliminar el pedido.");
         }
     }
+
 
     private void mostrarPedidosPendientes() {
         System.out.print("Ingrese el NIF del cliente (o presione Enter para mostrar todos): ");
@@ -291,16 +294,18 @@ public class VistaConsola {
             nif = null;
         }
 
-        List<Pedido> pedidosPendientes = controlador.obtenerPedidosPendientes(nif);
-        if (pedidosPendientes.isEmpty()) {
-            System.out.println("No hay pedidos pendientes.");
-        } else {
+        try {
+            List<Pedido> pedidosPendientes = controlador.obtenerPedidosPendientes(nif);
             System.out.println("\n--- PEDIDOS PENDIENTES ---");
             for (Pedido p : pedidosPendientes) {
                 System.out.println(p);
             }
+        } catch (DatosInvalidosException e) {
+            System.out.println(e.getMessage()); // Captura el error si no hay pedidos pendientes
         }
     }
+
+
 
 
     private void mostrarPedidosEnviados() {
@@ -310,15 +315,16 @@ public class VistaConsola {
             nif = null;
         }
 
-        List<Pedido> pedidosEnviados = controlador.obtenerPedidosEnviados(nif);
-        if (pedidosEnviados.isEmpty()) {
-            System.out.println("No hay pedidos enviados.");
-        } else {
+        try {
+            List<Pedido> pedidosEnviados = controlador.obtenerPedidosEnviados(nif);
             System.out.println("\n--- PEDIDOS ENVIADOS ---");
             for (Pedido p : pedidosEnviados) {
                 System.out.println(p);
             }
+        } catch (DatosInvalidosException e) {
+            System.out.println(e.getMessage()); // Captura el error si no hay pedidos enviados
         }
     }
+
 
 }
