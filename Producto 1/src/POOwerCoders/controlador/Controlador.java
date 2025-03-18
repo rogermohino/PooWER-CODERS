@@ -108,7 +108,6 @@ public class Controlador {
         }
 
         tienda.getPedidos().remove(pedidoAEliminar);
-        System.out.println("Pedido eliminado correctamente.");
     }
 
 

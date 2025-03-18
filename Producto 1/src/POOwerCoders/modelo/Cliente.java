@@ -98,7 +98,7 @@ public abstract class Cliente {
      */
     @Override
     public String toString() {
-        return String.format("POOwerCoders.modelo.Cliente {nombre='%s', domicilio='%s', nif='%s', email='%s'}", nombre, domicilio, nif, email);
+        return String.format("Cliente {Nombre: '%s', Domicilio: '%s', NIF: '%s', Email: '%s'}", nombre, domicilio, nif, email);
     }
 }
 

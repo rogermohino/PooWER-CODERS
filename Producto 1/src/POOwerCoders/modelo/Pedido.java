@@ -1,6 +1,9 @@
 package POOwerCoders.modelo;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+
 /**
  * Representa un pedido realizado por un cliente en la tienda en línea.
  * Implementa la interfaz POOwerCoders.modelo.IPedido.
@@ -146,14 +149,17 @@ public class Pedido implements IPedido {
      */
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        String fechaFormateada = fechaHora.format(formatter);
+
         return "Número de Pedido: " + numeroPedido +
                 " {Cliente: " + cliente +
                 ", Artículo: " + articulo +
                 ", Cantidad: " + cantidad +
-                ", FechaHora: " + fechaHora +
+                ", Fecha y Hora: " + fechaFormateada +
                 ", Precio Total: " + calcularPrecio() + "€" +
                 '}';
-    }
+        }
 
 
 }
