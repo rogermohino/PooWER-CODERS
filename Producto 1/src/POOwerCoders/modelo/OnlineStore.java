@@ -1,7 +1,9 @@
 package POOwerCoders.modelo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Representa una tienda en línea que gestiona clientes, artículos y pedidos.
@@ -9,7 +11,7 @@ import java.util.List;
 public class OnlineStore {
     // Atributos
     private List<Cliente> clientes = new ArrayList<>();
-    private List<Articulo> articulos = new ArrayList<>();
+    private Map<String, Articulo> articulos = new HashMap<>();
     private List<Pedido> pedidos = new ArrayList<>();
 
     /**
@@ -40,7 +42,7 @@ public class OnlineStore {
      * @return Lista de artículos.
      */
     public List<Articulo> getArticulos() {
-        return articulos;
+        return new ArrayList<>(articulos.values()); // Convierte el HashMap en una List
     }
 
     /**
@@ -53,7 +55,11 @@ public class OnlineStore {
 
     // Métodos específicos (ahora usan los métodos genéricos internamente)
     public void añadirArticulo(Articulo a) {
-        añadirElemento(articulos, a);
+        articulos.put(a.getCodigo(), a);
+    }
+
+    public Articulo obtenerArticuloPorCodigo(String codigo) {
+        return articulos.get(codigo);
     }
 
     public void añadirCliente(Cliente c) {
