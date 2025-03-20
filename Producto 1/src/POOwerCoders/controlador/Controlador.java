@@ -53,6 +53,10 @@ public class Controlador {
         return tienda.getArticulos();
     }
 
+    public Articulo obtenerArticuloPorCodigo(String codigo) {
+        return tienda.obtenerArticuloPorCodigo(codigo);
+    }
+
     public List<Pedido> obtenerPedidos() {
         return tienda.getPedidos();
     }

@@ -147,15 +147,7 @@ public class VistaConsola {
 
         System.out.print("Ingrese el código del artículo: ");
         String codigoArticulo = scanner.nextLine();
-        Articulo articulo = null;
-
-        // Buscar artículo por código
-        for (Articulo a : controlador.obtenerArticulos()) {
-            if (a.getCodigo().equals(codigoArticulo)) {
-                articulo = a;
-                break;
-            }
-        }
+        Articulo articulo = controlador.obtenerArticuloPorCodigo(codigoArticulo);
 
         if (articulo == null) {
             System.out.println("Error: El artículo no existe.");
@@ -326,6 +318,8 @@ public class VistaConsola {
             System.out.println(e.getMessage()); // Captura el error si no hay pedidos enviados
         }
     }
+
+
 
 
 }
