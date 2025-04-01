@@ -1,7 +1,7 @@
-package PO0werCoders.modelo.dao.impl;
+package POOwerCoders.modelo.DAO.impl;
 
 import POOwerCoders.modelo.Cliente;
-import PO0werCoders.modelo.dao.ClienteDAO;
+import POOwerCoders.modelo.DAO.ClienteDAO;
 import POOwerCoders.modelo.ConexionDB;
 
 import java.sql.*;

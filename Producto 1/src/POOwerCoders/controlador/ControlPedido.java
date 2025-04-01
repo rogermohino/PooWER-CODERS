@@ -1,8 +1,8 @@
-package PO0werCoders.controlador;
+package POOwerCoders.controlador;
 
 import POOwerCoders.modelo.Pedido;
-import PO0werCoders.modelo.dao.DAOFactory;
-import PO0werCoders.modelo.dao.PedidoDAO;
+import POOwerCoders.modelo.DAO.DAOFactory;
+import POOwerCoders.modelo.DAO.PedidoDAO;
 
 import java.util.List;
 

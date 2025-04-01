@@ -1,4 +1,4 @@
-package PO0werCoders.modelo.dao;
+package POOwerCoders.modelo.DAO;
 
 import POOwerCoders.modelo.Pedido;
 import java.util.List;

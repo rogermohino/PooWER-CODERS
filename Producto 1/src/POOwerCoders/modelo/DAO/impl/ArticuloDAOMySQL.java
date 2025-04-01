@@ -1,8 +1,8 @@
-package PO0werCoders.modelo.dao.impl;
+package POOwerCoders.modelo.DAO.impl;
 
 import POOwerCoders.modelo.Articulo;
 import POOwerCoders.modelo.ConexionDB;
-import PO0werCoders.modelo.dao.ArticuloDAO;
+import POOwerCoders.modelo.DAO.ArticuloDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
