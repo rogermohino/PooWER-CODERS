@@ -3,13 +3,36 @@ package POOwerCoders;
 import POOwerCoders.controlador.Controlador;
 import POOwerCoders.modelo.OnlineStore;
 import POOwerCoders.vista.VistaConsola;
+import PO0werCoders.vista.VistaArticulos;
+import PO0werCoders.vista.VistaClientes;
+import PO0werCoders.vista.VistaPedidos;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        OnlineStore tienda = new OnlineStore();
-        Controlador controlador = new Controlador(tienda);
-        VistaConsola vista = new VistaConsola(controlador);
+        VistaClientes vistaClientes = new VistaClientes();
+        VistaArticulos vistaArticulos = new VistaArticulos();
+        VistaPedidos vistaPedidos = new VistaPedidos();
 
-        vista.mostrarMenu();
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+        do {
+            System.out.println("\n====== MENÚ PRINCIPAL ======");
+            System.out.println("1. Gestión de Clientes");
+            System.out.println("2. Gestión de Artículos");
+            System.out.println("3. Gestión de Pedidos");
+            System.out.println("0. Salir");
+            System.out.print("Selecciona una opción: ");
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1 -> vistaClientes.mostrarMenu();
+                case 2 -> vistaArticulos.mostrarMenu();
+                case 3 -> vistaPedidos.mostrarMenu();
+            }
+        } while (opcion != 0);
+
+        System.out.println("👋 ¡Hasta luego!");
+
     }
 }

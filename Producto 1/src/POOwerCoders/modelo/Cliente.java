@@ -4,7 +4,7 @@ package POOwerCoders.modelo;
  * Representa un cliente abstracto con atributos básicos como nombre, domicilio,
  * NIF y correo electrónico.
  */
-public abstract class Cliente {
+public class Cliente {
     // Atributos
     protected String nombre;
     protected String domicilio;
