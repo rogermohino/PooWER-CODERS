@@ -1,6 +1,6 @@
-package PO0werCoders.vista;
+package POOwerCoders.vista;
 
-import PO0werCoders.controlador.ControlCliente;
+import POOwerCoders.controlador.ControlCliente;
 import POOwerCoders.modelo.Cliente;
 
 import java.util.Scanner;

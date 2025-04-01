@@ -1,16 +1,16 @@
-package PO0werCoders.modelo.dao;
+package POOwerCoders.modelo.DAO;
 
-import PO0werCoders.modelo.dao.impl.ClienteDAOMySQL;
+import POOwerCoders.modelo.DAO.impl.ClienteDAOMySQL;
 
 public class DAOFactory {
-    public static PO0werCoders.modelo.dao.ClienteDAO getClienteDAO() {
+    public static POOwerCoders.modelo.DAO.ClienteDAO getClienteDAO() {
         return new ClienteDAOMySQL();
     }
-    public static PO0werCoders.modelo.dao.ArticuloDAO getArticuloDAO() {
-        return new PO0werCoders.modelo.dao.impl.ArticuloDAOMySQL();
+    public static POOwerCoders.modelo.DAO.ArticuloDAO getArticuloDAO() {
+        return new POOwerCoders.modelo.DAO.impl.ArticuloDAOMySQL();
     }
-    public static PO0werCoders.modelo.dao.PedidoDAO getPedidoDAO() {
-        return new POOwerCoders.modelo.dao.impl.PedidoDAOMySQL();
+    public static POOwerCoders.modelo.DAO.PedidoDAO getPedidoDAO() {
+        return new POOwerCoders.modelo.DAO.impl.PedidoDAOMySQL();
     }
 
 

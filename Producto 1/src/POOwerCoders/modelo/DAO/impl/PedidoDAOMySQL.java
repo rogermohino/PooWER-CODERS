@@ -1,27 +1,30 @@
-package POOwerCoders.modelo.dao.impl;
+package POOwerCoders.modelo.DAO.impl;
 
+import POOwerCoders.modelo.Articulo;
 import POOwerCoders.modelo.Cliente;
 import POOwerCoders.modelo.Pedido;
 import POOwerCoders.modelo.ConexionDB;
-
-
+import POOwerCoders.modelo.DAO.ArticuloDAO;
+import POOwerCoders.modelo.DAO.ClienteDAO;
+import POOwerCoders.modelo.DAO.DAOFactory;
+import POOwerCoders.modelo.DAO.PedidoDAO;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PedidoDAOMySQL implements PO0werCoders.modelo.dao.PedidoDAO {
+public class PedidoDAOMySQL implements PedidoDAO {
 
     private Connection conn = ConexionDB.getConnection();
-    private PO0werCoders.modelo.dao.ClienteDAO clienteDAO = PO0werCoders.modelo.dao.DAOFactory.getClienteDAO(); // usamos el DAO para obtener el cliente completo
+    private ClienteDAO clienteDAO = DAOFactory.getClienteDAO();
+    private ArticuloDAO articuloDAO = DAOFactory.getArticuloDAO();  // DAO para obtener el artículo completo
 
     @Override
     public void insertar(Pedido pedido) {
         String sql = "INSERT INTO Pedido (numeroPedido, nifCliente, codigoArticulo, cantidad, fechaHora) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, pedido.getNumeroPedido());
-            stmt.setString(2, pedido.getCliente().getNif());  // extraemos el NIF desde el objeto Cliente
+            stmt.setString(2, pedido.getCliente().getNif());
             stmt.setString(3, pedido.getArticulo().getCodigo());
             stmt.setInt(4, pedido.getCantidad());
             stmt.setTimestamp(5, Timestamp.valueOf(pedido.getFechaHora()));
@@ -38,12 +41,13 @@ public class PedidoDAOMySQL implements PO0werCoders.modelo.dao.PedidoDAO {
             stmt.setInt(1, numeroPedido);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                Cliente cliente = clienteDAO.buscarPorNif(rs.getString("nifCliente")); // cargamos el objeto Cliente completo
+                Cliente cliente = clienteDAO.buscarPorNif(rs.getString("nifCliente"));
+                Articulo articulo = articuloDAO.buscarPorCodigo(rs.getString("codigoArticulo"));
 
                 return new Pedido(
                         rs.getInt("numeroPedido"),
                         cliente,
-                        rs.getString("codigoArticulo"),
+                        articulo,
                         rs.getInt("cantidad"),
                         rs.getTimestamp("fechaHora").toLocalDateTime()
                 );
@@ -62,11 +66,12 @@ public class PedidoDAOMySQL implements PO0werCoders.modelo.dao.PedidoDAO {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Cliente cliente = clienteDAO.buscarPorNif(rs.getString("nifCliente"));
+                Articulo articulo = articuloDAO.buscarPorCodigo(rs.getString("codigoArticulo"));
 
                 Pedido p = new Pedido(
                         rs.getInt("numeroPedido"),
                         cliente,
-                        rs.getString("codigoArticulo"),
+                        articulo,
                         rs.getInt("cantidad"),
                         rs.getTimestamp("fechaHora").toLocalDateTime()
                 );
@@ -78,5 +83,3 @@ public class PedidoDAOMySQL implements PO0werCoders.modelo.dao.PedidoDAO {
         return lista;
     }
 }
-
-

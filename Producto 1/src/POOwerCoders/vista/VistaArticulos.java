@@ -1,6 +1,6 @@
-package PO0werCoders.vista;
+package POOwerCoders.vista;
 
-import PO0werCoders.controlador.ControlArticulo;
+import POOwerCoders.controlador.ControlArticulo;
 import POOwerCoders.modelo.Articulo;
 
 import java.util.Scanner;

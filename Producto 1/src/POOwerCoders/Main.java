@@ -1,11 +1,8 @@
 package POOwerCoders;
 
-import POOwerCoders.controlador.Controlador;
-import POOwerCoders.modelo.OnlineStore;
-import POOwerCoders.vista.VistaConsola;
-import PO0werCoders.vista.VistaArticulos;
-import PO0werCoders.vista.VistaClientes;
-import PO0werCoders.vista.VistaPedidos;
+import POOwerCoders.vista.VistaArticulos;
+import POOwerCoders.vista.VistaClientes;
+import POOwerCoders.vista.VistaPedidos;
 import java.util.Scanner;
 
 public class Main {
