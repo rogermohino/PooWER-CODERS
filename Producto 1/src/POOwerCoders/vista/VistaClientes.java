@@ -1,7 +1,11 @@
 package POOwerCoders.vista;
 
-import POOwerCoders.controlador.ControlCliente;
+
 import POOwerCoders.modelo.Cliente;
+import POOwerCoders.excepciones.DatosInvalidosException;
+import POOwerCoders.modelo.ClienteEstandar;
+import POOwerCoders.modelo.ClientePremium;
+import POOwerCoders.controlador.ControlCliente;
 
 import java.util.Scanner;
 import java.util.List;
@@ -15,31 +19,58 @@ public class VistaClientes {
         do {
             System.out.println("\n--- Gestión de Clientes ---");
             System.out.println("1. Añadir cliente");
-            System.out.println("2. Listar clientes");
+            System.out.println("2. Listar todos los clientes");
+            System.out.println("3. Listar clientes estándar");
+            System.out.println("4. Listar clientes premium");
             System.out.println("0. Volver al menú principal");
+            System.out.print("Selecciona una opción: ");
             opcion = scanner.nextInt();
-            scanner.nextLine(); // limpiar buffer
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1 -> agregarCliente();
                 case 2 -> listarClientes();
+                case 3 -> listarClientesEstandar();
+                case 4 -> listarClientesPremium();
             }
         } while (opcion != 0);
     }
 
     private void agregarCliente() {
-        System.out.print("NIF: ");
-        String nif = scanner.nextLine();
-        System.out.print("Nombre: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Domicilio: ");
-        String domicilio = scanner.nextLine();
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
+        try {
+            System.out.print("NIF: ");
+            String nif = scanner.nextLine();
+            System.out.print("Nombre: ");
+            String nombre = scanner.nextLine();
+            System.out.print("Domicilio: ");
+            String domicilio = scanner.nextLine();
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
 
-        Cliente cliente = new Cliente(nombre, domicilio, nif, email);
-        controlCliente.agregarCliente(cliente);
-        System.out.println("✅ Cliente añadido correctamente.");
+            System.out.print("¿Es cliente Premium? (s/n): ");
+            String respuesta = scanner.nextLine().trim().toLowerCase();
+
+            Cliente cliente;
+            if (respuesta.equals("s")) {
+                System.out.print("Cuota anual: ");
+                double cuota = scanner.nextDouble();
+                System.out.print("Descuento en envío (ej: 0.10 para 10%): ");
+                double descuento = scanner.nextDouble();
+                scanner.nextLine();
+                cliente = new ClientePremium(nombre, domicilio, nif, email);
+            } else {
+                cliente = new ClienteEstandar(nombre, domicilio, nif, email);
+            }
+
+            controlCliente.agregarCliente(cliente);
+            System.out.println("✅ Cliente añadido correctamente.");
+
+        } catch (DatosInvalidosException e) {
+            System.err.println("❌ Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("❌ Error inesperado al añadir cliente: " + e.getMessage());
+            scanner.nextLine();
+        }
     }
 
     private void listarClientes() {
@@ -49,5 +80,24 @@ public class VistaClientes {
             System.out.println(c.getNif() + " - " + c.getNombre());
         }
     }
+
+    private void listarClientesEstandar() {
+        List<ClienteEstandar> estandar = controlCliente.obtenerClientesEstandar();
+        System.out.println("\n📋 Clientes estándar:");
+        for (ClienteEstandar c : estandar) {
+            System.out.println(c.getNif() + " - " + c.getNombre());
+        }
+    }
+
+    private void listarClientesPremium() {
+        List<ClientePremium> premium = controlCliente.obtenerClientesPremium();
+        System.out.println("\n📋 Clientes premium:");
+        for (ClientePremium c : premium) {
+            System.out.println(c.getNif() + " - " + c.getNombre() +
+                    " | Cuota anual: " + c.getCuotaAnual() +
+                    " | Descuento envío: " + (c.getDescuentoEnvio() * 100) + "%");
+        }
+    }
+
 }
 

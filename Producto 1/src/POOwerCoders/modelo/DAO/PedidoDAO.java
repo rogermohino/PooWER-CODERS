@@ -7,5 +7,6 @@ public interface PedidoDAO {
     void insertar(Pedido pedido);
     Pedido buscarPorNumero(int numeroPedido);
     List<Pedido> listarTodos();
+    void eliminar(int numeroPedido);
 }
 

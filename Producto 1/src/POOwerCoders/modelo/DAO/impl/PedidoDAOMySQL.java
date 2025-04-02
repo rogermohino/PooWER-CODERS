@@ -3,7 +3,6 @@ package POOwerCoders.modelo.DAO.impl;
 import POOwerCoders.modelo.Articulo;
 import POOwerCoders.modelo.Cliente;
 import POOwerCoders.modelo.Pedido;
-import POOwerCoders.modelo.ConexionDB;
 import POOwerCoders.modelo.DAO.ArticuloDAO;
 import POOwerCoders.modelo.DAO.ClienteDAO;
 import POOwerCoders.modelo.DAO.DAOFactory;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class PedidoDAOMySQL implements PedidoDAO {
 
-    private Connection conn = ConexionDB.getConnection();
+    private Connection conn = POOwerCoders.modelo.ConexionBD.getConnection();
     private ClienteDAO clienteDAO = DAOFactory.getClienteDAO();
     private ArticuloDAO articuloDAO = DAOFactory.getArticuloDAO();  // DAO para obtener el artículo completo
 
@@ -82,4 +81,17 @@ public class PedidoDAOMySQL implements PedidoDAO {
         }
         return lista;
     }
+
+    @Override
+    public void eliminar(int numeroPedido) {
+        String sql = "DELETE FROM Pedido WHERE numeroPedido = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, numeroPedido);
+            stmt.executeUpdate();
+            System.out.println("🗑️ Pedido eliminado de la base de datos.");
+        } catch (SQLException e) {
+            System.err.println("❌ Error al eliminar el pedido: " + e.getMessage());
+        }
+    }
+
 }
