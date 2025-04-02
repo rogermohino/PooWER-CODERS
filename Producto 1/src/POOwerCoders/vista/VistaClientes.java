@@ -40,10 +40,13 @@ public class VistaClientes {
         try {
             System.out.print("NIF: ");
             String nif = scanner.nextLine();
+
             System.out.print("Nombre: ");
             String nombre = scanner.nextLine();
+
             System.out.print("Domicilio: ");
             String domicilio = scanner.nextLine();
+
             System.out.print("Email: ");
             String email = scanner.nextLine();
 
@@ -52,11 +55,6 @@ public class VistaClientes {
 
             Cliente cliente;
             if (respuesta.equals("s")) {
-                System.out.print("Cuota anual: ");
-                double cuota = scanner.nextDouble();
-                System.out.print("Descuento en envío (ej: 0.10 para 10%): ");
-                double descuento = scanner.nextDouble();
-                scanner.nextLine();
                 cliente = new ClientePremium(nombre, domicilio, nif, email);
             } else {
                 cliente = new ClienteEstandar(nombre, domicilio, nif, email);
@@ -69,9 +67,10 @@ public class VistaClientes {
             System.err.println("❌ Error: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("❌ Error inesperado al añadir cliente: " + e.getMessage());
-            scanner.nextLine();
+            scanner.nextLine(); // Limpia el buffer
         }
     }
+
 
     private void listarClientes() {
         List<Cliente> clientes = controlCliente.listarClientes();
