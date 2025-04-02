@@ -30,12 +30,7 @@ public class ClienteDAOMySQL implements ClienteDAO {
 
     @Override
     public void insertar(Cliente cliente) {
-        String sql;
-        if (cliente instanceof ClientePremium) {
-            sql = "INSERT INTO Cliente (nif, nombre, domicilio, email, tipoCliente, cuotaAnual, descuentoEnvio) VALUES (?, ?, ?, ?, 'Premium', ?, ?)";
-        } else {
-            sql = "INSERT INTO Cliente (nif, nombre, domicilio, email, tipoCliente) VALUES (?, ?, ?, ?, 'Estandar')";
-        }
+        String sql = "INSERT INTO Cliente (nif, nombre, domicilio, email, tipoCliente) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cliente.getNif());
@@ -43,16 +38,37 @@ public class ClienteDAOMySQL implements ClienteDAO {
             stmt.setString(3, cliente.getDomicilio());
             stmt.setString(4, cliente.getEmail());
 
-            if (cliente instanceof ClientePremium cp) {
-                stmt.setDouble(5, cp.getCuotaAnual());
-                stmt.setDouble(6, cp.getDescuentoEnvio());
+            if (cliente instanceof ClientePremium) {
+                stmt.setString(5, "Premium");
+            } else {
+                stmt.setString(5, "Estandar");
             }
 
             stmt.executeUpdate();
+
+            // Insertar en tabla correspondiente
+            if (cliente instanceof ClientePremium cp) {
+                String sqlPremium = "INSERT INTO premium (nif, cuotaAnual, descuentoEnvio) VALUES (?, ?, ?)";
+                try (PreparedStatement stmtPremium = conn.prepareStatement(sqlPremium)) {
+                    stmtPremium.setString(1, cp.getNif());
+                    stmtPremium.setDouble(2, cp.getCuotaAnual());
+                    stmtPremium.setDouble(3, cp.getDescuentoEnvio());
+                    stmtPremium.executeUpdate();
+                }
+            } else if (cliente instanceof ClienteEstandar ce) {
+                String sqlEstandar = "INSERT INTO estandar (nif) VALUES (?)";
+                try (PreparedStatement stmtEstandar = conn.prepareStatement(sqlEstandar)) {
+                    stmtEstandar.setString(1, ce.getNif());
+                    stmtEstandar.executeUpdate();
+                }
+            }
+
         } catch (SQLException e) {
-            System.err.println("Error al insertar cliente: " + e.getMessage());
+            System.err.println("❌ Error al insertar cliente: " + e.getMessage());
         }
     }
+
+
 
     @Override
     public void eliminar(String nif) {
