@@ -25,5 +25,13 @@ public class ControlArticulo {
     public List<Articulo> listarArticulos() {
         return articuloDAO.listarTodos();
     }
+
+    public List<Articulo> buscarPorRangoPrecio(double min, double max) {
+        return articuloDAO.buscarPorRangoPrecio(min, max);
+    }
+
+    public List<Articulo> buscarPorDescripcion(String palabraClave) {
+        return articuloDAO.buscarPorDescripcion(palabraClave);
+    }
 }
 

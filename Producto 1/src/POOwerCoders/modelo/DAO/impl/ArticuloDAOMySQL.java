@@ -1,7 +1,7 @@
 package POOwerCoders.modelo.DAO.impl;
 
 import POOwerCoders.modelo.Articulo;
-import POOwerCoders.modelo.ConexionDB;
+import POOwerCoders.modelo.ConexionBD;
 import POOwerCoders.modelo.DAO.ArticuloDAO;
 
 import java.sql.*;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ArticuloDAOMySQL implements ArticuloDAO {
 
-    private Connection conexion = ConexionDB.getConnection();
+    private Connection conexion = POOwerCoders.modelo.ConexionBD.getConnection();
 
     @Override
     public void insertar(Articulo articulo) {
@@ -69,4 +69,53 @@ public class ArticuloDAOMySQL implements ArticuloDAO {
         }
         return lista;
     }
+
+    @Override
+    public List<Articulo> buscarPorRangoPrecio(double min, double max) {
+        List<Articulo> resultado = new ArrayList<>();
+        String sql = "SELECT * FROM Articulo WHERE precioVenta BETWEEN ? AND ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setDouble(1, min);
+            stmt.setDouble(2, max);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Articulo a = new Articulo(
+                        rs.getString("codigo"),
+                        rs.getString("descripcion"),
+                        rs.getDouble("precioVenta"),
+                        rs.getDouble("gastosEnvio"),
+                        rs.getInt("tiempoPreparacion")
+                );
+                resultado.add(a);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar artículos por rango de precio: " + e.getMessage());
+        }
+        return resultado;
+    }
+
+    @Override
+    public List<Articulo> buscarPorDescripcion(String palabraClave) {
+        List<Articulo> resultado = new ArrayList<>();
+        String sql = "SELECT * FROM Articulo WHERE descripcion LIKE ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setString(1, "%" + palabraClave + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Articulo a = new Articulo(
+                        rs.getString("codigo"),
+                        rs.getString("descripcion"),
+                        rs.getDouble("precioVenta"),
+                        rs.getDouble("gastosEnvio"),
+                        rs.getInt("tiempoPreparacion")
+                );
+                resultado.add(a);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar artículos por descripción: " + e.getMessage());
+        }
+        return resultado;
+    }
+
+
 }
