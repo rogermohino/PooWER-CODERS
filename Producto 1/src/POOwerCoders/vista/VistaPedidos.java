@@ -4,9 +4,7 @@ import POOwerCoders.controlador.ControlPedido;
 import POOwerCoders.controlador.ControlCliente;
 import POOwerCoders.controlador.ControlArticulo;
 import POOwerCoders.excepciones.DatosInvalidosException;
-import POOwerCoders.modelo.Cliente;
-import POOwerCoders.modelo.Articulo;
-import POOwerCoders.modelo.Pedido;
+import POOwerCoders.modelo.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -50,9 +48,32 @@ public class VistaPedidos {
         System.out.print("NIF cliente: ");
         String nif = scanner.nextLine();
         Cliente cliente = controlCliente.buscarCliente(nif);
+
         if (cliente == null) {
-            System.out.println("❌ Cliente no encontrado. No se puede añadir el pedido.");
-            return;
+            System.out.println("ℹ️ Cliente no encontrado. Se procederá a registrarlo.");
+
+            System.out.print("Nombre: ");
+            String nombre = scanner.nextLine();
+            System.out.print("Domicilio: ");
+            String domicilio = scanner.nextLine();
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
+            System.out.print("¿Es cliente premium? (s/n): ");
+            String tipo = scanner.nextLine();
+
+            if (tipo.equalsIgnoreCase("s")) {
+                cliente = new ClientePremium(nombre, domicilio, nif, email);
+            } else {
+                cliente = new ClienteEstandar(nombre, domicilio, nif, email);
+            }
+
+            try {
+                controlCliente.agregarCliente(cliente);
+                System.out.println("✅ Cliente registrado correctamente.");
+            } catch (DatosInvalidosException e) {
+                System.out.println("❌ Error al registrar el cliente: " + e.getMessage());
+                return; // Salimos del método si no se pudo registrar
+            }
         }
 
         System.out.print("Código artículo: ");
@@ -77,7 +98,6 @@ public class VistaPedidos {
         }
     }
 
-
     private void listarPedidos() {
         List<Pedido> pedidos = controlPedido.listarPedidos();
         System.out.println("\n📋 Lista de pedidos:");
@@ -85,6 +105,7 @@ public class VistaPedidos {
             mostrarDetallePedido(p);
         }
     }
+
     private void mostrarPedidosPendientes() {
         System.out.print("¿Filtrar por NIF cliente? (s/n): ");
         String respuesta = scanner.nextLine();
@@ -96,7 +117,7 @@ public class VistaPedidos {
 
         try {
             List<Pedido> pendientes = controlPedido.obtenerPedidosPendientes(nif);
-            System.out.println("\n Pedidos pendientes:");
+            System.out.println("\n📌 Pedidos pendientes:");
             for (Pedido p : pendientes) {
                 mostrarDetallePedido(p);
             }
@@ -116,7 +137,7 @@ public class VistaPedidos {
 
         try {
             List<Pedido> enviados = controlPedido.obtenerPedidosEnviados(nif);
-            System.out.println("\n Pedidos enviados:");
+            System.out.println("\n📦 Pedidos enviados:");
             for (Pedido p : enviados) {
                 mostrarDetallePedido(p);
             }
@@ -132,7 +153,7 @@ public class VistaPedidos {
 
         try {
             controlPedido.eliminarPedido(numero);
-            System.out.println(" Pedido eliminado correctamente.");
+            System.out.println("🗑️ Pedido eliminado correctamente.");
         } catch (DatosInvalidosException e) {
             System.out.println("❌ No se pudo eliminar el pedido: " + e.getMessage());
         }
@@ -147,6 +168,4 @@ public class VistaPedidos {
                 p.getCantidad(),
                 p.getFechaHora());
     }
-
-
 }
