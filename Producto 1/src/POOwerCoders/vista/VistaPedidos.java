@@ -160,12 +160,15 @@ public class VistaPedidos {
     }
 
     private void mostrarDetallePedido(Pedido p) {
-        System.out.printf("Pedido #%d - Cliente: %s (%s), Artículo: %s, Cantidad: %d, Fecha: %s\n",
+        double total = (p.getArticulo().getPrecioVenta() * p.getCantidad()) + p.getArticulo().getGastosEnvio();
+        System.out.printf("Pedido #%d - Cliente: %s (%s), Artículo: %s, Cantidad: %d, Fecha: %s, Hora: %s, Total: %.2f €\n",
                 p.getNumeroPedido(),
                 p.getCliente().getNombre(),
                 p.getCliente().getNif(),
                 p.getArticulo().getDescripcion(),
                 p.getCantidad(),
-                p.getFechaHora());
+                p.getFechaHora().toLocalDate(),
+                p.getFechaHora().toLocalTime(),
+                total);
     }
 }

@@ -12,9 +12,6 @@ public class DAOFactory {
     public static POOwerCoders.modelo.DAO.PedidoDAO getPedidoDAO() {
         return new POOwerCoders.modelo.DAO.impl.PedidoDAOMySQL();
     }
-
-
-
-    // En el futuro puedes tener: getArticuloDAO(), getPedidoDAO(), etc.
+    
 }
 

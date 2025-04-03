@@ -20,18 +20,65 @@ public class PedidoDAOMySQL implements PedidoDAO {
 
     @Override
     public void insertar(Pedido pedido) {
-        String sql = "INSERT INTO Pedido (numeroPedido, nifCliente, codigoArticulo, cantidad, fechaHora) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, pedido.getNumeroPedido());
-            stmt.setString(2, pedido.getCliente().getNif());
-            stmt.setString(3, pedido.getArticulo().getCodigo());
-            stmt.setInt(4, pedido.getCantidad());
-            stmt.setTimestamp(5, Timestamp.valueOf(pedido.getFechaHora()));
-            stmt.executeUpdate();
+        String sql = "{CALL sp_insertar_pedido(?, ?, ?, ?, ?)}";
+
+        try {
+            conn.setAutoCommit(false); // ⛔ Iniciar transacción
+
+            try (CallableStatement stmt = conn.prepareCall(sql)) {
+                stmt.setInt(1, pedido.getNumeroPedido());
+                stmt.setString(2, pedido.getCliente().getNif());
+                stmt.setString(3, pedido.getArticulo().getCodigo());
+                stmt.setInt(4, pedido.getCantidad());
+                stmt.setTimestamp(5, Timestamp.valueOf(pedido.getFechaHora()));
+                stmt.execute();
+            }
+
+            conn.commit(); // ✅ Confirmar cambios
+            System.out.println("✅ Pedido insertado correctamente con procedimiento y commit.");
+
         } catch (SQLException e) {
-            System.err.println("Error al insertar pedido: " + e.getMessage());
+            try {
+                conn.rollback(); // ❌ Revertir si hay error
+                System.err.println("⚠️ Error al insertar pedido. Se realizó rollback.");
+            } catch (SQLException ex) {
+                System.err.println("❌ Error durante rollback: " + ex.getMessage());
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true); // Restaurar autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+    @Override
+    public List<Pedido> listarTodos() {
+        List<Pedido> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Pedido";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Cliente cliente = clienteDAO.buscarPorNif(rs.getString("nifCliente"));
+                Articulo articulo = articuloDAO.buscarPorCodigo(rs.getString("codigoArticulo"));
+
+                Pedido p = new Pedido(
+                        rs.getInt("numeroPedido"),
+                        cliente,
+                        articulo,
+                        rs.getInt("cantidad"),
+                        rs.getTimestamp("fechaHora").toLocalDateTime()
+                );
+                lista.add(p);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al listar pedidos: " + e.getMessage());
+        }
+        return lista;
+    }
+
 
     @Override
     public Pedido buscarPorNumero(int numeroPedido) {
@@ -57,30 +104,6 @@ public class PedidoDAOMySQL implements PedidoDAO {
         return null;
     }
 
-    @Override
-    public List<Pedido> listarTodos() {
-        List<Pedido> lista = new ArrayList<>();
-        String sql = "SELECT * FROM Pedido";
-        try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                Cliente cliente = clienteDAO.buscarPorNif(rs.getString("nifCliente"));
-                Articulo articulo = articuloDAO.buscarPorCodigo(rs.getString("codigoArticulo"));
-
-                Pedido p = new Pedido(
-                        rs.getInt("numeroPedido"),
-                        cliente,
-                        articulo,
-                        rs.getInt("cantidad"),
-                        rs.getTimestamp("fechaHora").toLocalDateTime()
-                );
-                lista.add(p);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al listar pedidos: " + e.getMessage());
-        }
-        return lista;
-    }
 
     @Override
     public void eliminar(int numeroPedido) {

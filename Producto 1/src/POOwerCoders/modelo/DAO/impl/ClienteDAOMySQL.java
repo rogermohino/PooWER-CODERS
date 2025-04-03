@@ -30,43 +30,52 @@ public class ClienteDAOMySQL implements ClienteDAO {
 
     @Override
     public void insertar(Cliente cliente) {
-        String sql = "INSERT INTO Cliente (nif, nombre, domicilio, email, tipoCliente) VALUES (?, ?, ?, ?, ?)";
+        try {
+            conn.setAutoCommit(false); // 🔐 Iniciar transacción
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, cliente.getNif());
-            stmt.setString(2, cliente.getNombre());
-            stmt.setString(3, cliente.getDomicilio());
-            stmt.setString(4, cliente.getEmail());
-
-            if (cliente instanceof ClientePremium) {
-                stmt.setString(5, "Premium");
-            } else {
-                stmt.setString(5, "Estandar");
-            }
-
-            stmt.executeUpdate();
-
-            // Insertar en tabla correspondiente
             if (cliente instanceof ClientePremium cp) {
-                String sqlPremium = "INSERT INTO premium (nif, cuotaAnual, descuentoEnvio) VALUES (?, ?, ?)";
-                try (PreparedStatement stmtPremium = conn.prepareStatement(sqlPremium)) {
-                    stmtPremium.setString(1, cp.getNif());
-                    stmtPremium.setDouble(2, cp.getCuotaAnual());
-                    stmtPremium.setDouble(3, cp.getDescuentoEnvio());
-                    stmtPremium.executeUpdate();
+                String sql = "{CALL sp_insertar_cliente_premium(?, ?, ?, ?, ?, ?)}";
+                try (CallableStatement stmt = conn.prepareCall(sql)) {
+                    stmt.setString(1, cp.getNif());
+                    stmt.setString(2, cp.getNombre());
+                    stmt.setString(3, cp.getDomicilio());
+                    stmt.setString(4, cp.getEmail());
+                    stmt.setDouble(5, cp.getCuotaAnual());
+                    stmt.setDouble(6, cp.getDescuentoEnvio());
+                    stmt.execute();
                 }
+
             } else if (cliente instanceof ClienteEstandar ce) {
-                String sqlEstandar = "INSERT INTO estandar (nif) VALUES (?)";
-                try (PreparedStatement stmtEstandar = conn.prepareStatement(sqlEstandar)) {
-                    stmtEstandar.setString(1, ce.getNif());
-                    stmtEstandar.executeUpdate();
+                String sql = "{CALL sp_insertar_cliente_estandar(?, ?, ?, ?)}";
+                try (CallableStatement stmt = conn.prepareCall(sql)) {
+                    stmt.setString(1, ce.getNif());
+                    stmt.setString(2, ce.getNombre());
+                    stmt.setString(3, ce.getDomicilio());
+                    stmt.setString(4, ce.getEmail());
+                    stmt.execute();
                 }
             }
+
+            conn.commit(); // ✅ Confirmar cambios
+            System.out.println("✅ Cliente insertado correctamente con procedimiento y commit.");
 
         } catch (SQLException e) {
-            System.err.println("❌ Error al insertar cliente: " + e.getMessage());
+            try {
+                conn.rollback(); // ❌ Deshacer si algo falla
+                System.err.println("⚠️ Error al insertar cliente. Se realizó rollback.");
+            } catch (SQLException ex) {
+                System.err.println("❌ Error durante rollback: " + ex.getMessage());
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.setAutoCommit(true); // Restaurar autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
+
 
 
 
