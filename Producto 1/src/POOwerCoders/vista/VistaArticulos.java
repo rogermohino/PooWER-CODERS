@@ -41,7 +41,7 @@ public class VistaArticulos {
         double precio = scanner.nextDouble();
         System.out.print("Gastos de envío: ");
         double envio = scanner.nextDouble();
-        System.out.print("Tiempo de preparación (días): ");
+        System.out.print("Tiempo de preparación (minutos): ");
         int tiempo = scanner.nextInt();
         scanner.nextLine();
 

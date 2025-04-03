@@ -14,17 +14,60 @@ public class ArticuloDAOMySQL implements ArticuloDAO {
 
     @Override
     public void insertar(Articulo articulo) {
-        String sql = "INSERT INTO Articulo (codigo, descripcion, precioVenta, gastosEnvio, tiempoPreparacion) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
-            stmt.setString(1, articulo.getCodigo());
-            stmt.setString(2, articulo.getDescripcion());
-            stmt.setDouble(3, articulo.getPrecioVenta());
-            stmt.setDouble(4, articulo.getGastosEnvio());
-            stmt.setInt(5, articulo.getTiempoPreparacion());
-            stmt.executeUpdate();
+        String sql = "{CALL sp_insertar_articulo(?, ?, ?, ?, ?)}";
+
+        try {
+            conexion.setAutoCommit(false); // Iniciar transacción
+
+            try (CallableStatement stmt = conexion.prepareCall(sql)) {
+                stmt.setString(1, articulo.getCodigo());
+                stmt.setString(2, articulo.getDescripcion());
+                stmt.setDouble(3, articulo.getPrecioVenta());
+                stmt.setDouble(4, articulo.getGastosEnvio());
+                stmt.setInt(5, articulo.getTiempoPreparacion());
+                stmt.execute();
+            }
+
+            conexion.commit(); // Confirmar cambios
+            System.out.println("✅ Artículo insertado correctamente con procedimiento y commit.");
+
         } catch (SQLException e) {
-            System.err.println("Error al insertar artículo: " + e.getMessage());
+            try {
+                conexion.rollback();
+                System.err.println("⚠️ Error al insertar artículo. Se hizo rollback.");
+            } catch (SQLException ex) {
+                System.err.println("❌ Error al hacer rollback: " + ex.getMessage());
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conexion.setAutoCommit(true); // Restaurar autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    @Override
+    public List<Articulo> listarTodos() {
+        List<Articulo> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Articulo";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Articulo a = new Articulo(
+                        rs.getString("codigo"),
+                        rs.getString("descripcion"),
+                        rs.getDouble("precioVenta"),
+                        rs.getDouble("gastosEnvio"),
+                        rs.getInt("tiempoPreparacion")
+                );
+                lista.add(a);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al listar artículos: " + e.getMessage());
+        }
+        return lista;
     }
 
     @Override
@@ -48,27 +91,6 @@ public class ArticuloDAOMySQL implements ArticuloDAO {
         return null;
     }
 
-    @Override
-    public List<Articulo> listarTodos() {
-        List<Articulo> lista = new ArrayList<>();
-        String sql = "SELECT * FROM Articulo";
-        try (Statement stmt = conexion.createStatement()) {
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                Articulo a = new Articulo(
-                        rs.getString("codigo"),
-                        rs.getString("descripcion"),
-                        rs.getDouble("precioVenta"),
-                        rs.getDouble("gastosEnvio"),
-                        rs.getInt("tiempoPreparacion")
-                );
-                lista.add(a);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al listar artículos: " + e.getMessage());
-        }
-        return lista;
-    }
 
     @Override
     public List<Articulo> buscarPorRangoPrecio(double min, double max) {

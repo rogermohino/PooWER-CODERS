@@ -10,7 +10,7 @@ public class Articulo {
     private String descripcion;
     private double precioVenta;
     private double gastosEnvio;
-    private int tiempoPreparacion; //en milisegundos
+    private int tiempoPreparacion; //en minutos
 
 
     /**
@@ -20,7 +20,7 @@ public class Articulo {
      * @param descripcion Descripción del artículo.
      * @param precioVenta Precio de venta del artículo.
      * @param gastosEnvio Gastos de envío del artículo.
-     * @param tiempoPreparacion Tiempo de preparación en milisegundos.
+     * @param tiempoPreparacion Tiempo de preparación en minutos.
      */
     public Articulo(String codigo, String descripcion, double precioVenta, double gastosEnvio, int tiempoPreparacion) {
         this.codigo = codigo;
@@ -98,7 +98,7 @@ public class Articulo {
     /**
      * Obtiene el tiempo de preparación del artículo.
      * 
-     * @return Tiempo de preparación en milisegundos.
+     * @return Tiempo de preparación en minutos.
      */
     public int getTiempoPreparacion() {
         return tiempoPreparacion;
@@ -106,7 +106,7 @@ public class Articulo {
     /**
      * Establece el tiempo de preparación del artículo.
      * 
-     * @param tiempoPreparacion Nuevo tiempo de preparación en milisegundos.
+     * @param tiempoPreparacion Nuevo tiempo de preparación en minutos.
      */
     public void setTiempoPreparacion(int tiempoPreparacion) {
         this.tiempoPreparacion = tiempoPreparacion;
