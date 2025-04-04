@@ -15,7 +15,7 @@ public class ConexionBD {
 
     // Usuario y contraseña para acceder a la base de datos.
     private static final String USER = "root";
-    private static final String PASSWORD = "AdminAdmin123.";
+    private static final String PASSWORD = "Chimmy.15";
 
     // Objeto que almacenará la conexión activa.
     private static Connection conexion = null;

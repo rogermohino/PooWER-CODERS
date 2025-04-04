@@ -7,6 +7,14 @@ package POOwerCoders.modelo;
  */
 public class Articulo {
 
+    //Atributos
+    private String codigo;
+    private String descripcion;
+    private double precioVenta;
+    private double gastosEnvio;
+    private int tiempoPreparacion; //en minutos
+
+
     // Atributos privados del artículo
     private String codigo;              // Código único que identifica al artículo
     private String descripcion;         // Descripción textual del artículo
@@ -23,6 +31,12 @@ public class Articulo {
      * @param precioVenta Precio base que se paga por el artículo.
      * @param gastosEnvio Coste adicional que se suma al precio total por el envío.
      * @param tiempoPreparacion Tiempo en minutos que tarda en prepararse el pedido.
+
+     * @param descripcion Descripción del artículo.
+     * @param precioVenta Precio de venta del artículo.
+     * @param gastosEnvio Gastos de envío del artículo.
+     * @param tiempoPreparacion Tiempo de preparación en minutos.
+
      */
     public Articulo(String codigo, String descripcion, double precioVenta, double gastosEnvio, int tiempoPreparacion) {
         this.codigo = codigo;
@@ -66,9 +80,25 @@ public class Articulo {
         this.gastosEnvio = gastosEnvio;
     }
 
+
     public int getTiempoPreparacion() {
         return tiempoPreparacion;
     }
+
+
+    /**
+     * Obtiene el tiempo de preparación del artículo.
+     * 
+     * @return Tiempo de preparación en minutos.
+     */
+    public int getTiempoPreparacion() {
+        return tiempoPreparacion;
+    }
+    /**
+     * Establece el tiempo de preparación del artículo.
+     * 
+     * @param tiempoPreparacion Nuevo tiempo de preparación en minutos.
+     */
 
     public void setTiempoPreparacion(int tiempoPreparacion) {
         this.tiempoPreparacion = tiempoPreparacion;
