@@ -3,28 +3,24 @@ package POOwerCoders.modelo;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 /**
  * Representa un pedido realizado por un cliente en la tienda en línea.
- * Implementa la interfaz POOwerCoders.modelo.IPedido.
+ * Implementa la interfaz IPedido, lo que obliga a implementar los métodos calcularPrecio y cancelarPedido.
  */
 public class Pedido implements IPedido {
-    //Atributos
-    private int numeroPedido;
-    private Cliente cliente;
-    private Articulo articulo;
-    private int cantidad;
-    private LocalDateTime fechaHora;
 
+    // ------------------- Atributos -------------------
+
+    private int numeroPedido;              // Número único que identifica el pedido
+    private Cliente cliente;               // Cliente que realiza el pedido
+    private Articulo articulo;            // Artículo que se está comprando
+    private int cantidad;                 // Cantidad del artículo
+    private LocalDateTime fechaHora;      // Fecha y hora en que se realiza el pedido
+
+    // ------------------- Constructor -------------------
 
     /**
-     * Constructor de la clase POOwerCoders.modelo.Pedido.
-     * 
-     * @param numeroPedido Número de identificación del pedido.
-     * @param cliente POOwerCoders.modelo.Cliente que realiza el pedido.
-     * @param articulo Artículo solicitado.
-     * @param cantidad Cantidad del artículo solicitado.
-     * @param fechaHora Fecha y hora del pedido.
+     * Constructor para crear un nuevo pedido con todos sus datos.
      */
     public Pedido(int numeroPedido, Cliente cliente, Articulo articulo, int cantidad, LocalDateTime fechaHora) {
         this.numeroPedido = numeroPedido;
@@ -34,121 +30,87 @@ public class Pedido implements IPedido {
         this.fechaHora = fechaHora;
     }
 
+    // ------------------- Getters y Setters -------------------
 
-    /**
-     * Obtiene el número del pedido.
-     * 
-     * @return Número del pedido.
-     */
     public int getNumeroPedido() {
         return numeroPedido;
     }
-    /**
-     * Establece el número del pedido.
-     * 
-     * @param numeroPedido Nuevo número de pedido.
-     */
+
     public void setNumeroPedido(int numeroPedido) {
         this.numeroPedido = numeroPedido;
     }
-    /**
-     * Obtiene el cliente que realizó el pedido.
-     * 
-     * @return POOwerCoders.modelo.Cliente del pedido.
-     */
+
     public Cliente getCliente() {
         return cliente;
     }
-    /**
-     * Establece el cliente del pedido.
-     * 
-     * @param cliente Nuevo cliente del pedido.
-     */
+
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    /**
-     * Obtiene el artículo del pedido.
-     * 
-     * @return Artículo del pedido.
-     */
+
     public Articulo getArticulo() {
         return articulo;
     }
-    /**
-     * Establece el artículo del pedido.
-     * 
-     * @param articulo Nuevo artículo del pedido.
-     */
+
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
     }
-    /**
-     * Obtiene la cantidad de artículos del pedido.
-     * 
-     * @return Cantidad de artículos.
-     */
+
     public int getCantidad() {
         return cantidad;
     }
-    /**
-     * Establece la cantidad de artículos del pedido.
-     * 
-     * @param cantidad Nueva cantidad de artículos.
-     */
+
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    /**
-     * Obtiene la fecha y hora en que se realizó el pedido.
-     * 
-     * @return Fecha y hora del pedido.
-     */
+
     public LocalDateTime getFechaHora() {
         return fechaHora;
     }
-    /**
-     * Establece la fecha y hora del pedido.
-     * 
-     * @param fechaHora Nueva fecha y hora del pedido.
-     */
+
     public void setFechaHora(LocalDateTime fechaHora) {
         this.fechaHora = fechaHora;
     }
 
+    // ------------------- Métodos de la Interfaz IPedido -------------------
 
     /**
-     * Calcula el precio total del pedido, incluyendo el precio del artículo y los gastos de envío.
-     * Si el cliente es premium, se aplica un descuento en los gastos de envío.
-     * 
-     * @return Precio total del pedido.
+     * Calcula el precio total del pedido:
+     * - Multiplica el precio del artículo por la cantidad pedida.
+     * - Suma los gastos de envío.
+     * - Si el cliente es premium, aplica descuento en los gastos de envío.
      */
     @Override
     public double calcularPrecio() {
         double precioTotal = (articulo.getPrecioVenta() * cantidad) + articulo.getGastosEnvio();
+
+        // Si el cliente es premium, se aplica el descuento en el envío
         if (cliente instanceof ClientePremium) {
             precioTotal -= articulo.getGastosEnvio() * ((ClientePremium) cliente).getDescuentoEnvio();
         }
+
         return precioTotal;
-    }
-    /**
-     * Determina si el pedido puede ser cancelado.
-     * Un pedido solo puede cancelarse si aún está dentro del tiempo de preparación.
-     * 
-     * @return true si el pedido puede cancelarse, false en caso contrario.
-     */
-    @Override
-    public boolean cancelarPedido() {
-        return LocalDateTime.now().isBefore(fechaHora.plusMinutes(articulo.getTiempoPreparacion()));
     }
 
     /**
-     * Devuelve una representación en cadena del pedido.
-     * 
-     * @return Representación en cadena del pedido.
+     * Verifica si el pedido puede ser cancelado.
+     * Un pedido solo puede cancelarse si aún no ha pasado el tiempo de preparación del artículo.
+     */
+    @Override
+    public boolean cancelarPedido() {
+        return LocalDateTime.now().isBefore(
+                fechaHora.plusMinutes(articulo.getTiempoPreparacion())
+        );
+    }
+
+    // ------------------- Representación en texto -------------------
+
+    /**
+     * Devuelve los datos del pedido en formato legible, con la fecha formateada.
      */
     @Override
     public String toString() {
+        // Formatea la fecha para mostrarla de forma clara
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String fechaFormateada = fechaHora.format(formatter);
 
@@ -159,7 +121,5 @@ public class Pedido implements IPedido {
                 ", Fecha y Hora: " + fechaFormateada +
                 ", Precio Total: " + calcularPrecio() + "€" +
                 '}';
-        }
-
-
+    }
 }
