@@ -15,6 +15,6 @@ public class DAOFactory {
 
 
 
-    // En el futuro puedes tener: getArticuloDAO(), getPedidoDAO(), etc.
+
 }
 
