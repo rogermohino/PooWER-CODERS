@@ -1,46 +1,54 @@
 package POOwerCoders.modelo;
 
 /**
- * Representa un cliente premium que hereda de la clase POOwerCoders.modelo.Cliente.
- * Los clientes premium tienen una cuota anual fija y un descuento en el envío.
+ * Representa un cliente premium que hereda de la clase Cliente.
+ * Los clientes premium tienen características especiales:
+ * - Pagan una cuota anual.
+ * - Obtienen un descuento fijo en los gastos de envío.
  */
 public class ClientePremium extends Cliente {
-    //Atributos
-    private static final double CUOTA_ANUAL = 30.0;
-    private static final double DESCUENTO_ENVIO = 0.2;
+
+    // Atributos constantes: no cambian para ningún cliente premium.
+    private static final double CUOTA_ANUAL = 30.0;         // Cuota anual fija
+    private static final double DESCUENTO_ENVIO = 0.2;      // 20% de descuento en envío
 
     /**
-     * Constructor de la clase POOwerCoders.modelo.ClientePremium.
-     * 
-     * @param nombre Nombre del cliente.
-     * @param domicilio Domicilio del cliente.
-     * @param nif Número de Identificación Fiscal del cliente.
-     * @param email Correo electrónico del cliente.
+     * Constructor que inicializa los atributos heredados desde la clase Cliente.
+     *
+     * @param nombre     Nombre del cliente.
+     * @param domicilio  Dirección del cliente.
+     * @param nif        NIF del cliente (identificador).
+     * @param email      Email del cliente.
      */
     public ClientePremium(String nombre, String domicilio, String nif, String email) {
-        super(nombre, domicilio, nif, email);
+        super(nombre, domicilio, nif, email);  // Llama al constructor de la superclase Cliente
     }
 
-    //Getters (sin setters ya que los atributos son constantes)
+    // --- Getters (no hay setters porque los valores son constantes) ---
+
     /**
-     * Obtiene la cuota anual del cliente premium.
-     * 
-     * @return Cuota anual fija.
+     * Devuelve la cuota anual que paga el cliente premium.
+     *
+     * @return Cuota anual fija (30.0 euros).
      */
-    public double getCuotaAnual() { return CUOTA_ANUAL; }
+    public double getCuotaAnual() {
+        return CUOTA_ANUAL;
+    }
 
     /**
-     * Obtiene el descuento aplicado en los gastos de envío.
-     * 
-     * @return Descuento en envío.
+     * Devuelve el porcentaje de descuento aplicado en los gastos de envío.
+     *
+     * @return Descuento como valor decimal (0.2 equivale a 20%).
      */
-    public double getDescuentoEnvio() { return DESCUENTO_ENVIO; }
-
+    public double getDescuentoEnvio() {
+        return DESCUENTO_ENVIO;
+    }
 
     /**
-     * Devuelve una representación en cadena del cliente premium.
-     * 
-     * @return Representación en cadena del cliente premium.
+     * Representación del cliente premium en forma de texto.
+     * Útil para mostrar los datos en pantalla.
+     *
+     * @return Cadena con los datos principales del cliente.
      */
     @Override
     public String toString() {

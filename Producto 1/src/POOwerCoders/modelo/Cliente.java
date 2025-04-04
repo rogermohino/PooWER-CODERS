@@ -1,22 +1,24 @@
 package POOwerCoders.modelo;
 
 /**
- * Representa un cliente abstracto con atributos básicos como nombre, domicilio,
- * NIF y correo electrónico.
+ * Clase base que representa un cliente con datos comunes como nombre,
+ * domicilio, NIF y correo electrónico.
+ * Esta clase se puede extender para crear tipos específicos de cliente (como ClienteEstandar o ClientePremium).
  */
 public class Cliente {
-    // Atributos
-    protected String nombre;
-    protected String domicilio;
-    protected String nif;
-    protected String email;
+
+    // Atributos protegidos para permitir que las subclases los hereden
+    protected String nombre;        // Nombre completo del cliente
+    protected String domicilio;     // Dirección del cliente
+    protected String nif;           // Número de Identificación Fiscal
+    protected String email;         // Correo electrónico
 
     /**
-     * Constructor de la clase POOwerCoders.modelo.Cliente.
-     * 
-     * @param nombre Nombre del cliente.
-     * @param domicilio Domicilio del cliente.
-     * @param nif Número de Identificación Fiscal del cliente.
+     * Constructor que inicializa un cliente con todos sus datos.
+     *
+     * @param nombre Nombre completo del cliente.
+     * @param domicilio Dirección del cliente.
+     * @param nif NIF del cliente (usado como identificador único).
      * @param email Correo electrónico del cliente.
      */
     public Cliente(String nombre, String domicilio, String nif, String email) {
@@ -26,79 +28,51 @@ public class Cliente {
         this.email = email;
     }
 
-    /**
-     * Obtiene el nombre del cliente.
-     * 
-     * @return Nombre del cliente.
-     */
+    // Métodos getter y setter para acceder y modificar los atributos
+
     public String getNombre() {
         return nombre;
     }
-    /**
-     * Establece el nombre del cliente.
-     * 
-     * @param nombre Nuevo nombre del cliente.
-     */
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    /**
-     * Obtiene el domicilio del cliente.
-     * 
-     * @return Domicilio del cliente.
-     */
+
     public String getDomicilio() {
         return domicilio;
     }
-    /**
-     * Establece el domicilio del cliente.
-     * 
-     * @param domicilio Nuevo domicilio del cliente.
-     */
+
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
-    /**
-     * Obtiene el NIF del cliente.
-     * 
-     * @return NIF del cliente.
-     */
+
     public String getNif() {
         return nif;
     }
-    /**
-     * Establece el NIF del cliente.
-     * 
-     * @param nif Nuevo NIF del cliente.
-     */
+
     public void setNif(String nif) {
         this.nif = nif;
     }
-    /**
-     * Obtiene el correo electrónico del cliente.
-     * 
-     * @return Correo electrónico del cliente.
-     */
+
     public String getEmail() {
         return email;
     }
-    /**
-     * Establece el correo electrónico del cliente.
-     * 
-     * @param email Nuevo correo electrónico del cliente.
-     */
+
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * Devuelve una representación en cadena del cliente.
-     * 
-     * @return Representación en cadena del cliente.
+     * Método toString sobrescrito que devuelve una representación textual
+     * del objeto Cliente. Muy útil para depuración o mostrar en pantalla.
+     *
+     * @return Cadena con los datos del cliente.
      */
     @Override
     public String toString() {
-        return String.format("Cliente {Nombre: '%s', Domicilio: '%s', NIF: '%s', Email: '%s'}", nombre, domicilio, nif, email);
+        return String.format(
+                "Cliente {Nombre: '%s', Domicilio: '%s', NIF: '%s', Email: '%s'}",
+                nombre, domicilio, nif, email
+        );
     }
 }
-
