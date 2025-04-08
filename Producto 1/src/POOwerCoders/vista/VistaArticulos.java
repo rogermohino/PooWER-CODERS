@@ -65,19 +65,26 @@ public class VistaArticulos {
 
         // Crear objeto Articulo y enviarlo al controlador
         Articulo a = new Articulo(codigo, descripcion, precio, envio, tiempo);
-        controlArticulo.agregarArticulo(a);
-
-        System.out.println("✅ Artículo añadido.");
+        try {
+            controlArticulo.agregarArticulo(a);
+            System.out.println("✅ Artículo añadido.");
+        } catch (Exception e) {
+            System.err.println("❌ Error al añadir artículo: " + e.getMessage());
+        }
     }
 
     /**
      * Muestra todos los artículos registrados en la base de datos.
      */
     private void listarArticulos() {
-        List<Articulo> articulos = controlArticulo.listarArticulos();
-        System.out.println("\n📦 Lista de artículos:");
-        for (Articulo a : articulos) {
-            System.out.println(a.getCodigo() + " - " + a.getDescripcion());
+        try {
+            List<Articulo> articulos = controlArticulo.listarArticulos();
+            System.out.println("\n📦 Lista de artículos:");
+            for (Articulo a : articulos) {
+                System.out.println(a.getCodigo() + " - " + a.getDescripcion());
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Error al listar artículos: " + e.getMessage());
         }
     }
 
@@ -92,10 +99,14 @@ public class VistaArticulos {
         scanner.nextLine(); // Limpiar el buffer
 
         // Buscar artículos dentro del rango indicado
-        List<Articulo> articulos = controlArticulo.buscarPorRangoPrecio(min, max);
-        System.out.println("\n📋 Artículos en ese rango de precio:");
-        for (Articulo a : articulos) {
-            System.out.printf("%s - %s | Precio: %.2f €\n", a.getCodigo(), a.getDescripcion(), a.getPrecioVenta());
+        try {
+            List<Articulo> articulos = controlArticulo.buscarPorRangoPrecio(min, max);
+            System.out.println("\n📋 Artículos en ese rango de precio:");
+            for (Articulo a : articulos) {
+                System.out.printf("%s - %s | Precio: %.2f €\n", a.getCodigo(), a.getDescripcion(), a.getPrecioVenta());
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Error al buscar por precio: " + e.getMessage());
         }
     }
 
@@ -106,10 +117,14 @@ public class VistaArticulos {
         System.out.print("Palabra clave: ");
         String palabra = scanner.nextLine();
 
-        List<Articulo> articulos = controlArticulo.buscarPorDescripcion(palabra);
-        System.out.println("\n📋 Artículos que coinciden con la descripción:");
-        for (Articulo a : articulos) {
-            System.out.printf("%s - %s\n", a.getCodigo(), a.getDescripcion());
+        try {
+            List<Articulo> articulos = controlArticulo.buscarPorDescripcion(palabra);
+            System.out.println("\n📋 Artículos que coinciden con la descripción:");
+            for (Articulo a : articulos) {
+                System.out.printf("%s - %s\n", a.getCodigo(), a.getDescripcion());
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Error al buscar por descripción: " + e.getMessage());
         }
     }
 

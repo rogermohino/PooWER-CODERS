@@ -12,6 +12,8 @@ import POOwerCoders.modelo.DAO.DAOFactory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.SQLException;
+
 
 /**
  * Implementación de la interfaz ClienteDAO que se conecta con la base de datos MySQL.

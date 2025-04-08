@@ -6,6 +6,7 @@ import POOwerCoders.modelo.DAO.DAOFactory;
 import POOwerCoders.modelo.DAO.PedidoDAO;
 import POOwerCoders.excepciones.DatosInvalidosException;
 
+import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -43,7 +44,11 @@ public class ControlPedido {
         if (buscarPedido(pedido.getNumeroPedido()) != null) {
             throw new DatosInvalidosException("Ya existe un pedido con ese número.");
         }
-        pedidoDAO.insertar(pedido); // Insertamos el pedido a través del DAO
+        try {
+            pedidoDAO.insertar(pedido);
+        } catch (SQLException e) {
+            System.err.println("❌ Error al agregar pedido: " + e.getMessage());
+        } // Insertamos el pedido a través del DAO
     }
 
     /**

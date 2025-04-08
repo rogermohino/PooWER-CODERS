@@ -3,6 +3,7 @@ package POOwerCoders.modelo.DAO;
 // Importamos la clase Articulo y las utilidades para listas
 import POOwerCoders.modelo.Articulo;
 import java.util.List;
+import java.sql.SQLException;
 
 /**
  * Interfaz ArticuloDAO.

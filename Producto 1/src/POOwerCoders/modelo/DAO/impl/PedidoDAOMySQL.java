@@ -12,6 +12,8 @@ import POOwerCoders.modelo.DAO.PedidoDAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.SQLException;
+
 
 /**
  * Clase que implementa la interfaz PedidoDAO y se encarga de realizar
@@ -71,7 +73,7 @@ public class PedidoDAOMySQL implements PedidoDAO {
             e.printStackTrace();
         } finally {
             try {
-                conn.setAutoCommit(true); // Restaurar autocommit
+                conn.setAutoCommit(true); // Restaurar autocommitgit check
             } catch (SQLException e) {
                 e.printStackTrace();
             }

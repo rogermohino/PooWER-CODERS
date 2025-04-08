@@ -5,7 +5,10 @@ import POOwerCoders.modelo.Articulo;
 import POOwerCoders.modelo.DAO.ArticuloDAO;
 import POOwerCoders.modelo.DAO.DAOFactory;
 
+import java.sql.SQLException;
 import java.util.List;
+
+
 
 /**
  * Clase ControlArticulo - Forma parte de la capa de control dentro del patrón MVC.
@@ -30,7 +33,11 @@ public class ControlArticulo {
      * @param articulo Objeto Articulo a insertar
      */
     public void agregarArticulo(Articulo articulo) {
-        articuloDAO.insertar(articulo);
+        try {
+            articuloDAO.insertar(articulo);
+        } catch (SQLException e) {
+            System.err.println("❌ Error al agregar artículo: " + e.getMessage());
+        }
     }
 
     /**
