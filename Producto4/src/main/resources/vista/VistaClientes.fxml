@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.poowercoders.POOwerCoders.vista.VistaClientesController">
+
+    <top>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <Label text="📋 Listado de Clientes" style="-fx-font-size: 18px;" />
+            <HBox spacing="10">
+                <Label text="NIF:"/>
+                <TextField fx:id="campoBusqueda" promptText="Introduce NIF"/>
+                <Button text="🔍 Buscar" onAction="#buscarCliente"/>
+                <Button text="🔄 Mostrar Todos" onAction="#actualizarTabla"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Filtrar por tipo:"/>
+                <ComboBox fx:id="comboTipo" onAction="#filtrarPorTipo"/>
+            </HBox>
+        </VBox>
+    </top>
+
+
+
+    <center>
+        <TableView fx:id="tablaClientes">
+            <columns>
+                <TableColumn fx:id="colNif" text="NIF"/>
+                <TableColumn fx:id="colNombre" text="Nombre"/>
+                <TableColumn fx:id="colEmail" text="Email"/>
+                <TableColumn fx:id="colTipo" text="Tipo"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <Button text="➕ Añadir Cliente" onAction="#abrirFormularioCliente"/>
+            <Button text="🗑️ Eliminar Cliente" onAction="#eliminarClienteSeleccionado"/>
+            <Button text="❌ Cerrar" onAction="#cerrarVentana"/>
+        </HBox>
+    </bottom>
+
+
+</BorderPane>
