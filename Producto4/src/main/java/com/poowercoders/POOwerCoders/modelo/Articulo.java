@@ -16,7 +16,6 @@ public class Articulo {
 
     @Id
     private String codigo;            // Código único que identifica al artículo
-
     private String descripcion;       // Breve descripción del artículo
     private double precioVenta;       // Precio de venta al cliente
     private double gastosEnvio;       // Coste adicional por envío
@@ -37,7 +36,6 @@ public class Articulo {
     }
 
     // Getters y Setters
-
     public String getCodigo() {
         return codigo;
     }
