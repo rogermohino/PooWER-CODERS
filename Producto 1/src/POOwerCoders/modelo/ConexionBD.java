@@ -11,11 +11,11 @@ import java.sql.SQLException;
 public class ConexionBD {
 
     // URL de conexión a la base de datos. Incluye el nombre de la BBDD "poowercoders".
-    private static final String URL = "jdbc:mysql://localhost:3307/poowercoders";
+    private static final String URL = "jdbc:mysql://localhost:3306/poowercoders";
 
     // Usuario y contraseña para acceder a la base de datos.
     private static final String USER = "root";
-    private static final String PASSWORD = "151515Rog98**";
+    private static final String PASSWORD = "Chimmy.15";
 
     // Objeto que almacenará la conexión activa.
     private static Connection conexion = null;

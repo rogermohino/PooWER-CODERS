@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.poowercoders.POOwerCoders.vista.VistaPrincipalController"
+      alignment="CENTER" spacing="20" style="-fx-padding: 30;">
+
+    <Text text="Sistema de Gestión WoodShops" style="-fx-font-size: 20px;"/>
+
+    <Button text="🧑‍💼 Gestión de Clientes" onAction="#abrirClientes"/>
+    <Button text="🪵 Gestión de Artículos" onAction="#abrirArticulos"/>
+    <Button text="📦 Gestión de Pedidos" onAction="#abrirPedidos"/>
+    <Button text="❌ Salir" onAction="#salir"/>
+
+</VBox>
