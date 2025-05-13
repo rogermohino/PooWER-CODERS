@@ -57,4 +57,25 @@ public class ArticuloDAOHibernate implements ArticuloDAO {
                     .list();
         }
     }
+
+    @Override
+    public void eliminar(String codigo) {
+        Transaction tx = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Articulo articulo = session.get(Articulo.class, codigo);
+            if (articulo != null) {
+                tx = session.beginTransaction();
+                session.remove(articulo);
+                tx.commit();
+            } else {
+                System.out.println("⚠️ Artículo no encontrado con código: " + codigo);
+            }
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            System.err.println("❌ Error al eliminar artículo: " + e.getMessage());
+        }
+    }
+
+
+
 }
