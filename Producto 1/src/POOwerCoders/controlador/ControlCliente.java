@@ -8,6 +8,7 @@ import POOwerCoders.modelo.DAO.DAOFactory;
 import POOwerCoders.modelo.ClienteEstandar;
 import POOwerCoders.modelo.ClientePremium;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,11 @@ public class ControlCliente {
         if (cliente.getNombre().isBlank() || cliente.getNif().isBlank()) {
             throw new DatosInvalidosException("El nombre o NIF no pueden estar vacíos.");
         }
-        clienteDAO.insertar(cliente);
+        try {
+            clienteDAO.insertar(cliente);
+        } catch (SQLException e) {
+            System.err.println("❌ Error al agregar cliente: " + e.getMessage());
+        }
     }
 
     /**

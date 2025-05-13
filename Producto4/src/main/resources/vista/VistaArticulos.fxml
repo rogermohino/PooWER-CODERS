@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.poowercoders.POOwerCoders.vista.VistaArticulosController">
+
+    <top>
+        <VBox spacing="5">
+            <ToolBar>
+                <Button text="Añadir Artículo" onAction="#abrirFormularioArticulo"/>
+                <Button text="🗑️ Eliminar Artículo" onAction="#eliminarArticuloSeleccionado"/>
+                <Button text="❌ Cerrar" onAction="#cerrarVentana"/>
+            </ToolBar>
+            <HBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <Label text="Buscar por descripción:"/>
+                <TextField fx:id="campoBusqueda" promptText="Ej. teclado, ratón"/>
+                <Button text="Buscar" onAction="#filtrarArticulos"/>
+                <Label text="Precio entre:"/>
+                <TextField fx:id="campoPrecioMin" promptText="Mín"/>
+                <TextField fx:id="campoPrecioMax" promptText="Máx"/>
+                <Button text="Filtrar Precio" onAction="#filtrarPorRangoPrecio"/>
+                <Button text="Mostrar Todos" onAction="#actualizarTabla"/>
+            </HBox>
+
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tablaArticulos">
+            <columns>
+                <TableColumn fx:id="colCodigo" text="Código" prefWidth="100"/>
+                <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="200"/>
+                <TableColumn fx:id="colPrecio" text="Precio (€)" prefWidth="100"/>
+                <TableColumn fx:id="colGastosEnvio" text="Gastos Envío (€)" prefWidth="120"/>
+                <TableColumn fx:id="colTiempoPreparacion" text="Tiempo Prep. (min)" prefWidth="140"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>
+
+

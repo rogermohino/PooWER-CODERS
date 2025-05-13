@@ -7,7 +7,7 @@
     <persistence-unit name="poowercodersPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <!-- Entidades: más adelante aquí se incluirán tus clases con @Entity -->
+        <!-- Entidades: más adelante aquí se incluirán clases con @Entity -->
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

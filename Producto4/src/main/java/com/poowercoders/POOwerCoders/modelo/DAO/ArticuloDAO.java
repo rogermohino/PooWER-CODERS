@@ -43,4 +43,10 @@ public interface ArticuloDAO {
      * @return Lista de artículos que contienen la palabra clave.
      */
     List<Articulo> buscarPorDescripcion(String palabraClave);
+
+    /**
+     * Elimina un artículo a partir de su código.
+     * @param codigo Código del artículo a eliminar.
+     */
+    void eliminar(String codigo);
 }

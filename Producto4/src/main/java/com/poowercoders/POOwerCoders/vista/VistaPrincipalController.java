@@ -30,7 +30,17 @@ public class VistaPrincipalController {
 
     @FXML
     private void abrirArticulos(ActionEvent event) {
-        mostrarAlerta("Aquí se abrirá la gestión de artículos.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaArticulos.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Gestión de Artículos");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error al cargar la ventana de artículos.");
+        }
     }
 
     @FXML

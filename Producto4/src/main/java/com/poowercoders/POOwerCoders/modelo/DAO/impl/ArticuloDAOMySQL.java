@@ -184,4 +184,23 @@ public class ArticuloDAOMySQL implements ArticuloDAO {
 
         return resultado;
     }
+
+    @Override
+    public void eliminar(String codigo) {
+        // Código SQL para eliminar el artículo
+        try (Connection conn = ConexionBD.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM articulo WHERE codigo = ?")) {
+
+            stmt.setString(1, codigo);
+            int filas = stmt.executeUpdate();
+
+            if (filas == 0) {
+                System.out.println("⚠️ No se encontró ningún artículo con código: " + codigo);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ Error al eliminar artículo: " + e.getMessage());
+        }
+    }
+
 }

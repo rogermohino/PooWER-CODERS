@@ -86,9 +86,9 @@ public class VistaPedidos {
             try {
                 controlCliente.agregarCliente(cliente); // Se añade el cliente
                 System.out.println("✅ Cliente registrado correctamente.");
-            } catch (DatosInvalidosException e) {
+            } catch (DatosInvalidosException | Exception e) {
                 System.out.println("❌ Error al registrar el cliente: " + e.getMessage());
-                return; // No se continúa si el cliente no se pudo registrar
+                return; // Detener ejecución si no se pudo registrar
             }
         }
 
@@ -112,7 +112,7 @@ public class VistaPedidos {
         try {
             controlPedido.agregarPedido(p); // Se intenta agregar el pedido
             System.out.println("✅ Pedido añadido correctamente.");
-        } catch (DatosInvalidosException e) {
+        } catch (DatosInvalidosException | Exception e) {
             System.out.println("❌ No se pudo añadir el pedido: " + e.getMessage());
         }
     }
@@ -121,10 +121,14 @@ public class VistaPedidos {
      * Muestra todos los pedidos registrados en el sistema.
      */
     private void listarPedidos() {
-        List<Pedido> pedidos = controlPedido.listarPedidos();
-        System.out.println("\n📋 Lista de pedidos:");
-        for (Pedido p : pedidos) {
-            mostrarDetallePedido(p);
+        try {
+            List<Pedido> pedidos = controlPedido.listarPedidos();
+            System.out.println("\n📋 Lista de pedidos:");
+            for (Pedido p : pedidos) {
+                mostrarDetallePedido(p);
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Error al listar pedidos: " + e.getMessage());
         }
     }
 
@@ -147,7 +151,7 @@ public class VistaPedidos {
             for (Pedido p : pendientes) {
                 mostrarDetallePedido(p);
             }
-        } catch (DatosInvalidosException e) {
+        } catch (DatosInvalidosException | Exception e) {
             System.out.println("ℹ️ " + e.getMessage());
         }
     }
@@ -171,7 +175,7 @@ public class VistaPedidos {
             for (Pedido p : enviados) {
                 mostrarDetallePedido(p);
             }
-        } catch (DatosInvalidosException e) {
+        } catch (DatosInvalidosException | Exception e) {
             System.out.println("ℹ️ " + e.getMessage());
         }
     }

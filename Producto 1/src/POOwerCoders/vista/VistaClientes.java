@@ -98,10 +98,14 @@ public class VistaClientes {
      * Muestra la lista de todos los clientes registrados.
      */
     private void listarClientes() {
-        List<Cliente> clientes = controlCliente.listarClientes();
-        System.out.println("\n📋 Lista de clientes:");
-        for (Cliente c : clientes) {
-            System.out.println(c.getNif() + " - " + c.getNombre());
+        try {
+            List<Cliente> clientes = controlCliente.listarClientes();
+            System.out.println("\n📋 Lista de clientes:");
+            for (Cliente c : clientes) {
+                System.out.println(c.getNif() + " - " + c.getNombre());
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Error al listar clientes: " + e.getMessage());
         }
     }
 
@@ -109,10 +113,14 @@ public class VistaClientes {
      * Muestra únicamente los clientes que son del tipo estándar.
      */
     private void listarClientesEstandar() {
-        List<ClienteEstandar> estandar = controlCliente.obtenerClientesEstandar();
-        System.out.println("\n📋 Clientes estándar:");
-        for (ClienteEstandar c : estandar) {
-            System.out.println(c.getNif() + " - " + c.getNombre());
+        try {
+            List<ClienteEstandar> estandar = controlCliente.obtenerClientesEstandar();
+            System.out.println("\n📋 Clientes estándar:");
+            for (ClienteEstandar c : estandar) {
+                System.out.println(c.getNif() + " - " + c.getNombre());
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Error al listar clientes estándar: " + e.getMessage());
         }
     }
 
@@ -121,12 +129,16 @@ public class VistaClientes {
      * incluyendo su cuota anual y el porcentaje de descuento en envío.
      */
     private void listarClientesPremium() {
-        List<ClientePremium> premium = controlCliente.obtenerClientesPremium();
-        System.out.println("\n📋 Clientes premium:");
-        for (ClientePremium c : premium) {
-            System.out.println(c.getNif() + " - " + c.getNombre() +
-                    " | Cuota anual: " + c.getCuotaAnual() +
-                    " | Descuento envío: " + (c.getDescuentoEnvio() * 100) + "%");
+        try {
+            List<ClientePremium> premium = controlCliente.obtenerClientesPremium();
+            System.out.println("\n📋 Clientes premium:");
+            for (ClientePremium c : premium) {
+                System.out.println(c.getNif() + " - " + c.getNombre() +
+                        " | Cuota anual: " + c.getCuotaAnual() +
+                        " | Descuento envío: " + (c.getDescuentoEnvio() * 100) + "%");
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Error al listar clientes premium: " + e.getMessage());
         }
     }
 

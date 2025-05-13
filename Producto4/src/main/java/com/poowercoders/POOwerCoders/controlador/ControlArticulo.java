@@ -33,4 +33,9 @@ public class ControlArticulo {
     public List<Articulo> buscarPorDescripcion(String palabraClave) {
         return articuloDAO.buscarPorDescripcion(palabraClave);
     }
+
+    public void eliminarArticulo(String codigo) {
+        articuloDAO.eliminar(codigo);
+    }
+
 }
