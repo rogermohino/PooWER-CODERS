@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.poowercoders.POOwerCoders.vista.VistaPedidosController">
+
+    <top>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <Label text="📋 Listado de Pedidos" style="-fx-font-size: 18px;" />
+            <HBox spacing="10">
+                <Label text="Nº Pedido:"/>
+                <TextField fx:id="campoBuscar" promptText="Introduce Nº de pedido"/>
+                <Button text="🔍 Buscar" onAction="#buscarPedido"/>
+                <Button text="🔄 Mostrar Todos" onAction="#actualizarTabla"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Filtrar por estado:"/>
+                <ComboBox fx:id="comboEstado" onAction="#filtrarPorEstado"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tablaPedidos">
+            <columns>
+                <TableColumn fx:id="colNumero" text="Nº Pedido"/>
+                <TableColumn fx:id="colCliente" text="Cliente"/>
+                <TableColumn fx:id="colArticulo" text="Artículo"/>
+                <TableColumn fx:id="colCantidad" text="Cantidad"/>
+                <TableColumn fx:id="colFecha" text="Fecha y Hora"/>
+                <TableColumn fx:id="colPrecioTotal" text="Precio Total"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="➕ Nuevo Pedido" onAction="#abrirFormularioPedido"/>
+            <Button text="🗑️ Eliminar Pedido" onAction="#eliminarPedidoSeleccionado"/>
+            <Button text="❌ Cerrar" onAction="#cerrarVentana"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

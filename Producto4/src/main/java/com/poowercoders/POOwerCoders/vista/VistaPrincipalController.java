@@ -45,7 +45,17 @@ public class VistaPrincipalController {
 
     @FXML
     private void abrirPedidos(ActionEvent event) {
-        mostrarAlerta("Aquí se abrirá la gestión de pedidos.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPedidos.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Gestión de Pedidos");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error al cargar la ventana de pedidos.");
+        }
     }
 
     @FXML
