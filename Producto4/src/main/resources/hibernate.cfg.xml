@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 5.3//EN"
-        "http://hibernate.org/dtd/hibernate-configuration-5.3.dtd">
+        "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
     <session-factory>
 
         <!-- Conexión a la base de datos -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3307/poowercoders</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/poowercoders</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">151515Rog98**</property>
+        <property name="hibernate.connection.password">Chimmy.15</property>
 
         <!-- Dialecto para MySQL -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>

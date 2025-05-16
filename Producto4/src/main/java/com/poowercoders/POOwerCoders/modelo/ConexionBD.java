@@ -15,9 +15,9 @@ public class ConexionBD {
     // ================================
     // Datos de conexión a la base de datos
     // ================================
-    private static final String URL = "jdbc:mysql://localhost:3307/poowercoders";
+    private static final String URL = "jdbc:mysql://localhost:3306/poowercoders";
     private static final String USER = "root";
-    private static final String PASSWORD = "151515Rog98**";
+    private static final String PASSWORD = "Chimmy.15";
 
     // Variable de conexión reutilizable
     private static Connection conexion = null;
